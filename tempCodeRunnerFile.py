@@ -1,1 +1,2 @@
-self.x = 0
+SCREEN_WIDTH = 128
+SCREEN_HEIGHT = 100
