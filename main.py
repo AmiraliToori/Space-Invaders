@@ -34,6 +34,10 @@ def main():
     screen_number = 1 # Start screen
     width, height = screen.get_width(), screen.get_height()
     
+    menu = menu_screen.Main_screen(screen,
+                                    width,
+                                    height,
+                                    screen_number)
     
     while run:
         
@@ -41,12 +45,11 @@ def main():
             
             # First screen
             case 1:
-                
-                screen_number = menu_screen.main_screen(screen,
-                                        width,
-                                        height,
-                                        screen_number)
-                
+                menu.title_screen.draw(screen)
+                menu.start_btn.draw(screen, GREEN_HOVER)
+                menu.setting_btn.draw(screen, GREEN_HOVER)
+                menu.leaderboard_btn.draw(screen, GREEN_HOVER)
+                menu.exit_btn.draw(screen, RED_HOVER)
                 
             # enter intro of game
             case 2:
@@ -93,6 +96,7 @@ def main():
             if event.type == pg.QUIT:
                 run = False
                 
+        # while menu_screen.main_screen.abravesh_flag:
         pg.display.flip()
 
 

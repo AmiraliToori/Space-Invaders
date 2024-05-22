@@ -25,54 +25,43 @@ GREEN_HOVER = "green"
 RED_HOVER = "red"
 
 
-def main_screen(screen,
-                width: int,
-                height: int, 
-                screen_number: int) -> int:
+class Main_screen:
+
     
-    Title_screen = Text("SPACE INVADERS",
-                                FONT_PATH,
-                                TITLE_FONT_SIZE,
-                                DEFAULT_FONT_COLOR,
-                                BACKGROUND_COLOR,
-                                width // 2,
-                                height * 1 // 5)
+    def __init__(self,
+                 screen,
+                 width: int,
+                 height: int,
+                 screen_number: int) -> None:
+    
+        self.screen = screen
+        self.width = width
+        self.height = height
+        self.screen_number = screen_number
+        self.title_screen = Text("SPACE INVADERS",
+                                    FONT_PATH,
+                                    TITLE_FONT_SIZE,
+                                    DEFAULT_FONT_COLOR,
+                                    BACKGROUND_COLOR,
+                                    width // 2,
+                                    height * 1 // 5)
         
-    start_btn = Button("Start",
-                                DEFAULT_FONT_COLOR,
-                                width // 2,
-                                height * 4 // 12)
-
-    setting_btn = Button("Setting",
-                                DEFAULT_FONT_COLOR,
-                                width // 2,
-                                height * 5 // 12)
-
-    leaderboard_btn = Button("Leaderboard",
+        self.start_btn = Button("Start",
                                     DEFAULT_FONT_COLOR,
                                     width // 2,
-                                    height * 6 // 12)
-
-    exit_btn = Button("EXIT",
-                                DEFAULT_FONT_COLOR,
-                                width // 2,
-                                height * 9 // 12)
-    
-    
-    
-    screen.fill(BACKGROUND_COLOR)
-    Title_screen.draw(screen)
-    
-    if start_btn.draw(screen, GREEN_HOVER):
-        screen_number = 2
-    
-    if setting_btn.draw(screen, GREEN_HOVER):
-        screen_number = 3
+                                    height * 4 // 12)
         
-    if leaderboard_btn.draw(screen, GREEN_HOVER):
-        screen_number = 4
-    
-    if exit_btn.draw(screen, RED_HOVER):
-        screen_number = 5
+        self.setting_btn = Button("Setting",
+                                    DEFAULT_FONT_COLOR,
+                                    width // 2,
+                                    height * 5 // 12)
         
-    return screen_number
+        self.leaderboard_btn = Button("Leaderboard",
+                                        DEFAULT_FONT_COLOR,
+                                        width // 2,
+                                        height * 6 // 12)
+        
+        self.exit_btn = Button("EXIT",
+                                    DEFAULT_FONT_COLOR,
+                                    width // 2,
+                                    height * 9 // 12)
