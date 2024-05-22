@@ -3,23 +3,29 @@ import pygame as pg
 import display
 
 from menu import menu_screen
-
-# Font
-FONT_PATH = "material/font/Pixelify_Sans/PixelifySans-VariableFont_wght.ttf"
-DEFAULT_FONT_COLOR = "white"
-BACKGROUND_COLOR = "black"
+from studio import play_sound, play_music
 
 # Main Screen
 TITLE_FONT_SIZE = 50
 
+# Hover Color button
 GREEN_HOVER = "green"
 RED_HOVER = "red"
+
+# MUSIC FILES PATH
+MAIN_SCREEN_THEME_PATH = "material/sounds/musics/main_menu_theme.mp3"
 
 
 def main():
     
     pg.init()
     pg.mixer.init()
+    
+    
+    
+    # main_screen_theme = play_music(MAIN_SCREEN_THEME_PATH)
+    # pg.mixer.music.play(main_screen_theme)
+    
     screen = display.set_screen_display()
     display.set_desktop_icon()
     
@@ -29,8 +35,6 @@ def main():
     width, height = screen.get_width(), screen.get_height()
     
     
-    
-    
     while run:
         
         match screen_number:
@@ -38,7 +42,7 @@ def main():
             # First screen
             case 1:
                 
-                menu_screen.main_screen(screen,
+                screen_number = menu_screen.main_screen(screen,
                                         width,
                                         height,
                                         screen_number)
