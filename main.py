@@ -1,6 +1,6 @@
 
 import pygame as pg
-from menus import main_screen
+from menus import main_screen, setting_screen
 from sfx import music_list 
 
 # Main Screen
@@ -32,6 +32,11 @@ def main():
                                     height,
                                     screen_number)
     
+    setting = setting_screen.SettingScreen(screen,
+                                            width,
+                                            height,
+                                            screen_number)
+    
     # music_list.MusicList().play_main_title()
     while run:
         
@@ -45,12 +50,13 @@ def main():
                 
             # enter intro of game
             case 2:
-                screen.fill("black")
+                screen.fill('orange')
+                
             
             
             # enter Settings
             case 3:
-                screen.fill("black")
+                setting.draw()
                 
             
             
