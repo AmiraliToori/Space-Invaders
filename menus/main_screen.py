@@ -61,23 +61,34 @@ class MainScreen:
                                     DEFAULT_FONT_COLOR,
                                     width // 2,
                                     height * 9 // 12)
+        self.screen_number = 1
         
         
-    def draw(self,
-             screen_number: int = 0) -> None:
+    def draw(self) -> None:
         
         self.title_screen.draw(self.screen)
         
-        self.start_btn.draw(self.screen, GREEN_HOVER)
+        start_flag = self.start_btn.draw(self.screen, GREEN_HOVER)
+        
+        setting_flag = self.setting_btn.draw(self.screen, GREEN_HOVER)
             
-        self.setting_btn.draw(self.screen, GREEN_HOVER)
+        leaderboard_flag = self.leaderboard_btn.draw(self.screen, GREEN_HOVER)
             
-        self.leaderboard_btn.draw(self.screen, GREEN_HOVER)
-            
-        self.exit_btn.draw(self.screen, RED_HOVER)
-            
+        exit_flag = self.exit_btn.draw(self.screen, RED_HOVER)
         
         
+        if start_flag:
+            self.screen_number = 2
+        if setting_flag:
+            self.screen_number = 3
+        if leaderboard_flag:
+            self.screen_number = 4
+        if exit_flag:
+            self.screen_number = 5
+        
+        
+    def update(self) -> int:
+        return self.screen_number
         
         
         
