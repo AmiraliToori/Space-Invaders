@@ -1,5 +1,5 @@
 
-import pygame as pg
+
 import sys
 
 
@@ -61,7 +61,6 @@ class MainScreen:
                                     DEFAULT_FONT_COLOR,
                                     width // 2,
                                     height * 9 // 12)
-        self.screen_number = 1
         
         
     def draw(self) -> None:
