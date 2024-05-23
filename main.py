@@ -40,6 +40,7 @@ def main():
             # First screen
             case 1:
                 menu.draw()
+                screen_number = menu.update()
                 
                 
             # enter intro of game
