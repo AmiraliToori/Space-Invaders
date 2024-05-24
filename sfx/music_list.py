@@ -11,3 +11,4 @@ class MusicList:
         
     def play_main_title(self) -> None:
         self.main_title_theme.play_music()
+        
