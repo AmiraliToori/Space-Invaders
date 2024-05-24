@@ -24,14 +24,19 @@ class Text:
         self.color = color
         self.background_color = background_color
         
+    
+    
+    def draw(self, screen, text):
+        
         self.font = pg.font.Font(self.font_name, self.font_size)
+        
+        # self.text_input = text
+        
         self.text = self.font.render(self.text_input,
                                      self.ANTI_ALIAS,
-                                     color,
-                                     background_color)
+                                     self.color,
+                                     self.background_color)
         
-        self.text_box = self.text.get_rect(center = (x_pos, y_pos))
-
-    
-    def draw(self, screen):
+        self.text_box = self.text.get_rect(center = (self.x_pos, self.y_pos))
+        
         screen.blit(self.text, self.text_box)
