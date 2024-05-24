@@ -15,6 +15,7 @@ RED_HOVER = "red"
 # MUSIC FILES PATH
 MAIN_SCREEN_THEME_PATH = "material/sounds/musics/main_menu_theme.mp3"
 
+DEFAULT_VOLUME = 10
 
 def main():
     
@@ -37,7 +38,8 @@ def main():
                                             height,
                                             screen_number)
     
-    # music_list.MusicList().play_main_title()
+    music_list.MusicList().play_main_title()
+    pg.mixer.music.set_volume(1)
     while run:
         
         match screen_number:
@@ -75,8 +77,8 @@ def main():
         
         if keys[pg.K_q]:
             run = False
-        if keys[pg.K_SPACE]:
-            screen_number = 2
+        # if keys[pg.K_SPACE]:
+        #     screen_number = 2
         
         for event in pg.event.get():
             
