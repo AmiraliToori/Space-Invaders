@@ -18,7 +18,7 @@ class Button:
         self.x_pos = x_pos
         self.y_pos = y_pos
         
-        self.color = "white"
+        self.color = color
         
         self.text_input = text_input
         
@@ -30,7 +30,9 @@ class Button:
         self.clicked = False
         self.play_one_time = False
         
-    def draw(self, screen, hover_color) -> bool:
+    def draw(self,
+             screen,
+             hover_color: str,) -> bool:
         target = False
         
         
@@ -60,4 +62,49 @@ class Button:
         screen.blit(self.text_box, self.rect)
         
         return target
+    
+
+
+class SettingButton(Button):
+    
+    def __init__(self,
+                 text_input: str,
+                 color: str,
+                 x_pos: int,
+                 y_pos: int) -> None:
+        super().__init__(text_input, color, x_pos, y_pos)
+        
+    def draw(self, screen, hover_color, command) -> None:
+        
+        pos = pg.mouse.get_pos()
+        
+        if self.rect.collidepoint(pos):
+            
+            self.text_box = self.text.render(self.text_input, ANTI_ALIAS, hover_color)
+            
+            if self.play_one_time == False:
+                
+                sound_list.SoundList().play_select_sound()
+                self.play_one_time = True
+            
+            
+            if pg.mouse.get_pressed()[0] == 1 and self.clicked == False:
+                command()
+                sound_list.SoundList().play_click_sound()
+                self.clicked = True
+                
+                
+            elif pg.mouse.get_pressed()[0] == 0:
+                self.clicked = False
+                
+        else:
+            self.text_box = self.text.render(self.text_input, ANTI_ALIAS, self.color)
+            self.play_one_time = False
+            
+        screen.blit(self.text_box, self.rect)
+
+        
+        
+        
+            
         
