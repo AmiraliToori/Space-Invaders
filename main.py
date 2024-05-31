@@ -1,7 +1,8 @@
 
 import pygame as pg
 from menus import main_screen, setting_screen
-from sfx import music_list 
+from sfx import music_list, sound_list
+
 
 # Main Screen
 SCREEN_WIDTH = 800
@@ -39,7 +40,8 @@ def main():
                                             screen_number)
     
     music_list.MusicList().play_main_title()
-    pg.mixer.music.set_volume(1)
+    
+    
     while run:
         
         match screen_number:
