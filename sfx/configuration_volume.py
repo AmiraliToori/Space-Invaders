@@ -11,8 +11,8 @@ class ConfigurationVolume:
     
         
     def __init__(self) -> None:
-        self.current_volume_music = 1
-        self.current_volume_sound = 1
+        self.current_volume_music = 10
+        self.current_volume_sound = 10
     
     def get_current_music_volume(self) -> float:
         return VOLUMES_PRESETS[self.current_volume_music]
