@@ -5,9 +5,10 @@ import sys
 
 sys.path.append('/home/glados/Documents/AmirAli Toori/Lessons/Python/Space-Invaders')
 
-
+import pygame as pg
 from objects.button import Button
 from objects.text import Text
+from graphic import resolution_setting
 
 # Font
 FONT_PATH = "material/font/Pixelify_Sans/PixelifySans-VariableFont_wght.ttf"
@@ -26,13 +27,12 @@ class MainScreen:
     def __init__(self,
                  screen,
                  width: int,
-                 height: int,
-                 screen_number: int) -> None:
+                 height: int) -> None:
     
         self.screen = screen
         self.width = width
         self.height = height
-        self.screen_number = screen_number
+        self.screen_number = 1
         
         self.title_screen = Text("SPACE INVADERS",
                                     FONT_PATH,
@@ -65,6 +65,8 @@ class MainScreen:
         
     def draw(self) -> None:
         
+        self.screen.fill('black')
+        
         self.title_screen.draw(self.screen)
         
         start_flag = self.start_btn.draw(self.screen, GREEN_HOVER)
@@ -87,7 +89,11 @@ class MainScreen:
         
         
     def update(self) -> int:
-        return self.screen_number
+        temp = self.screen_number
+        self.screen_number = 1
+        return temp
         
-        
-        
+pg.init()
+main = MainScreen(resolution_setting.screen.display(),
+                         resolution_setting.screen.get_width(),
+                         resolution_setting.screen.get_height())
