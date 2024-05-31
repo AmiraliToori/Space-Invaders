@@ -3,6 +3,8 @@
 import pygame as pg
 from sfx import sound_list
 
+
+
 MAIN_FONT_PATH = "material/font/Pixelify_Sans/PixelifySans-VariableFont_wght.ttf"
 FONT_SIZE = 40
 ANTI_ALIAS = True
@@ -43,12 +45,12 @@ class Button:
             self.text_box = self.text.render(self.text_input, ANTI_ALIAS, hover_color)
             
             if self.play_one_time == False:
-                sound_list.SoundList().play_select_sound()
+                sound_list.sounds.play_select_sound()
                 self.play_one_time = True
             
             
             if pg.mouse.get_pressed()[0] == 1 and self.clicked == False:
-                sound_list.SoundList().play_click_sound()
+                sound_list.sounds.play_click_sound()
                 self.clicked = True
                 target = True
                 
@@ -84,13 +86,13 @@ class SettingButton(Button):
             
             if self.play_one_time == False:
                 
-                sound_list.SoundList().play_select_sound()
+                sound_list.sounds.play_select_sound()
                 self.play_one_time = True
             
             
             if pg.mouse.get_pressed()[0] == 1 and self.clicked == False:
                 command()
-                sound_list.SoundList().play_click_sound()
+                sound_list.sounds.play_click_sound()
                 self.clicked = True
                 
                 
