@@ -1,75 +1,61 @@
 
 import pygame as pg
 from menus import main_screen, setting_screen
-from sfx import music_list 
+from sfx import music_list
 
-# Main Screen
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-TITLE_FONT_SIZE = 50
 
-# Hover Color button
-GREEN_HOVER = "green"
-RED_HOVER = "red"
+
 
 # MUSIC FILES PATH
 MAIN_SCREEN_THEME_PATH = "material/sounds/musics/main_menu_theme.mp3"
 
-DEFAULT_VOLUME = 10
 
 def main():
     
     pg.init()
     pg.mixer.init()
     
-    screen = pg.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
-    
+    # screen = pg.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT], pg.RESIZABLE)
+    # screen = pg.transform.scale(screen, (windoWidth,windowHeight)) 
+    # window.blit(screen, (0, 0))
+    # screen = resolution_setting.screen.display()
     run = True
     screen_number = 1 # Start screen
-    width, height = screen.get_width(), screen.get_height()
-    
-    menu = main_screen.MainScreen(screen,
-                                    width,
-                                    height,
-                                    screen_number)
-    
-    setting = setting_screen.SettingScreen(screen,
-                                            width,
-                                            height,
-                                            screen_number)
-    
     music_list.MusicList().play_main_title()
-    pg.mixer.music.set_volume(1)
+    
     while run:
         
         match screen_number:
             
             # First screen
             case 1:
-                menu.draw()
-                screen_number = menu.update()
+                
+                main_screen.main.draw()
+                screen_number = main_screen.main.update()
+                
                 
                 
             # enter intro of game
             case 2:
-                screen.fill('orange')
+                screen.fill('black')
+            
                 
             
             
             # enter Settings
             case 3:
-                setting.draw()
-                
-            
+                setting_screen.setting.draw()
+                screen_number = setting_screen.setting.update()
             
             # enter leaderboard
             case 4:
                 screen.fill("yellow")
+                
             
             
             # exit button
             case 5:
-                pass
+                pg.quit()
                 
                 
         
@@ -82,6 +68,10 @@ def main():
         
         for event in pg.event.get():
             
+            if event.type == pg.VIDEORESIZE:
+                # screen = resolution_setting.screen.set_custom_display(event.w, event.h)
+                screen = pg.display.set_mode((event.w, event.h), pg.RESIZABLE)
+                
             if event.type == pg.QUIT:
                 run = False
                 

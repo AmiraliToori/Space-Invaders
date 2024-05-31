@@ -26,12 +26,9 @@ class Text:
         
     
     
-    def draw(self, screen, text):
+    def draw(self, screen):
         
         self.font = pg.font.Font(self.font_name, self.font_size)
-        
-        # self.text_input = text
-        
         self.text = self.font.render(self.text_input,
                                      self.ANTI_ALIAS,
                                      self.color,
@@ -40,3 +37,8 @@ class Text:
         self.text_box = self.text.get_rect(center = (self.x_pos, self.y_pos))
         
         screen.blit(self.text, self.text_box)
+        
+    def update(self,
+               entry: str) -> None:
+        
+        self.text_input = entry
