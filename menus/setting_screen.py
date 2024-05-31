@@ -7,7 +7,7 @@ sys.path.append('/home/glados/Documents/AmirAli Toori/Lessons/Python/Space-Invad
 
 from objects.button import SettingButton
 from objects.text import Text
-from sfx import sfx
+from sfx import configuration_volume
 
 
 # Font
@@ -25,7 +25,7 @@ MUSIC_BUTTON_OFFSET = 70
 
 
 
-music_adjuster = sfx.ConfigurationMusic()
+volume_adjuster = configuration_volume.ConfigurationVolume()
 
 class SettingScreen:
     
@@ -50,8 +50,9 @@ class SettingScreen:
                                     width // 2,
                                     height * 1 // 5)
         
+        #########################################################################################
         
-        self.change_music_volume = Text("Music Volume:",
+        self.music_volume_label = Text("Music Volume:",
                                     FONT_PATH,
                                     SETTING_TITLE_FONT_SIZE,
                                     DEFAULT_FONT_COLOR,
@@ -59,7 +60,8 @@ class SettingScreen:
                                     width * 1 // 4,
                                     height * 2 // 5)
         
-        self.current_volume = Text(f"{music_adjuster.get_current_volume()}",
+        
+        self.current_music_volume = Text(f"{volume_adjuster.get_current_music_volume()}",
                                     FONT_PATH,
                                     SETTING_TITLE_FONT_SIZE,
                                     DEFAULT_FONT_COLOR,
@@ -67,17 +69,45 @@ class SettingScreen:
                                     width * 3 // 4,
                                     height * 2 // 5)
         
-        
-        
-        self.volume_up = SettingButton(f">",
+        self.volume_up_music = SettingButton(f">",
                                     DEFAULT_FONT_COLOR,
                                     width * 3 // 4 + MUSIC_BUTTON_OFFSET,
                                     height * 2 // 5)
         
-        self.volume_down = SettingButton(f"<",
+        self.volume_down_music = SettingButton(f"<",
                                     DEFAULT_FONT_COLOR,
                                     width * 3 // 4 - MUSIC_BUTTON_OFFSET,
                                     height * 2 // 5)
+        #############################################################################################################
+        
+        self.sound_volume_label = Text("Sound Volume:",
+                                    FONT_PATH,
+                                    SETTING_TITLE_FONT_SIZE,
+                                    DEFAULT_FONT_COLOR,
+                                    BACKGROUND_COLOR,
+                                    width * 1 // 4,
+                                    height * 3 // 5)
+        
+        self.current_sound_volume = Text(f"{volume_adjuster.get_current_sound_volume()}",
+                                    FONT_PATH,
+                                    SETTING_TITLE_FONT_SIZE,
+                                    DEFAULT_FONT_COLOR,
+                                    BACKGROUND_COLOR,
+                                    width * 3 // 4,
+                                    height * 3 // 5)
+        
+        
+        self.volume_up_sound = SettingButton(f">",
+                                    DEFAULT_FONT_COLOR,
+                                    width * 3 // 4 + MUSIC_BUTTON_OFFSET,
+                                    height * 3 // 5)
+        
+        self.volume_down_sound = SettingButton(f"<",
+                                    DEFAULT_FONT_COLOR,
+                                    width * 3 // 4 - MUSIC_BUTTON_OFFSET,
+                                    height * 3 // 5)
+        
+        
         
     def draw(self) -> None:
         
@@ -85,11 +115,21 @@ class SettingScreen:
         
         self.setting_title.draw(self.screen)
         
-        self.change_music_volume.draw(self.screen)
+        self.music_volume_label.draw(self.screen)
         
-        self.current_volume.draw(self.screen)
+        self.current_music_volume.draw(self.screen)
+        self.current_music_volume.update(f"{volume_adjuster.get_current_music_volume()}")
         
-        self.volume_up.draw(self.screen, GREEN_HOVER, music_adjuster.volume_up)
+        self.volume_up_music.draw(self.screen, GREEN_HOVER, volume_adjuster.volume_up_music)
+        self.volume_down_music.draw(self.screen, GREEN_HOVER, volume_adjuster.volume_down_music)
         
-        self.volume_down.draw(self.screen, GREEN_HOVER, music_adjuster.volume_down)
-            
+        ######################################################################################################################
+        
+        self.sound_volume_label.draw(self.screen)
+        
+        self.current_sound_volume.draw(self.screen)
+        self.current_sound_volume.update(f"{volume_adjuster.get_current_sound_volume()}")
+        
+        self.volume_up_sound.draw(self.screen, GREEN_HOVER, volume_adjuster.volume_up_sound)
+        self.volume_down_sound.draw(self.screen, GREEN_HOVER, volume_adjuster.volume_down_sound)
+        
