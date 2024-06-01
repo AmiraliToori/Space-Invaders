@@ -1,7 +1,8 @@
 
 import pygame as pg
-from menus import main_screen, setting_screen, intro_screen
-from sfx import music_list
+from menus import main_screen, setting_screen, intro_screen, game_screen
+from objects.player import player
+# from sfx import music_list
 
 
 
@@ -46,16 +47,17 @@ def main():
             
             # enter leaderboard
             case 4:
-                screen.fill("yellow")
+                # screen.fill("yellow")
+                pass
                 
             
             # exit button
             case 5:
-                pg.quit()
+                run = False
                 
             # the game itself
             case 6:
-                pass
+                game_screen.game.draw()
                 
                 
         
@@ -63,15 +65,16 @@ def main():
         
         if keys[pg.K_q]:
             run = False
-        # if keys[pg.K_SPACE]:
-        #     screen_number = 2
+        if keys[pg.K_LEFT]:
+            player.move_left()
+        if keys[pg.K_RIGHT]:
+            player.move_right()
+            
         
         for event in pg.event.get():
             
             if event.type == pg.VIDEORESIZE:
-                # screen = resolution_setting.screen.set_custom_display(event.w, event.h)
-                screen = pg.display.set_mode((event.w, event.h), pg.RESIZABLE)
-                
+                pass
             if event.type == pg.QUIT:
                 run = False
                 
