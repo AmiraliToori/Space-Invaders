@@ -28,13 +28,15 @@ class Player(pg.sprite.Sprite):
         self.player_y = screen.get_height() * 44 // 48
         
         
-        image_file = pg.image.load(PLAYER_IMAGE).convert_alpha()
-        image_width = image_file.get_width()
-        image_height = image_file.get_height()
+        self.image_file = pg.image.load(PLAYER_IMAGE).convert_alpha()
+        self.image_width = self.image_file.get_width()
+        self.image_height = self.image_file.get_height()
         
-        self.image = pg.transform.scale(image_file, (image_width * SCALE, image_height * SCALE))
-        self.rect = self.image.get_rect()
+        self.image = pg.transform.scale(self.image_file, (self.image_width * SCALE, self.image_height * SCALE))
+        self.rect = self.image.get_rect(center = (self.player_x, self.player_y))
         self.rect.center = (self.player_x, self.player_y)
+        
+        self.have_bullet = True
         
     
     def update(self):
@@ -59,6 +61,6 @@ class Player(pg.sprite.Sprite):
         pass
     
 player = Player("PLAYER")
-players = pg.sprite.GroupSingle()
+player_group = pg.sprite.GroupSingle()
 
-players.add(player)
+player_group.add(player)
