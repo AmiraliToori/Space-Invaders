@@ -1,7 +1,8 @@
 
 from graphic.resolution_setting import screen
-from objects.player import players
 
+from objects.player import player_group
+from objects.bullet import player_bullet
 
 class GameScreen:
     
@@ -16,10 +17,14 @@ class GameScreen:
         self.height = height
     
     
-    def draw(self):
+    def draw(self) -> None:
         self.screen.fill('black')
-        players.update()
-        players.draw(self.screen)
+        
+        player_group.update()
+        player_group.draw(self.screen)
+        
+        player_bullet.update()
+        player_bullet.draw(self.screen)
         
 game = GameScreen(screen.display(),
                   screen.get_width(),
