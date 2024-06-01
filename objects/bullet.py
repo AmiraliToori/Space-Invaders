@@ -18,11 +18,11 @@ SCALE = 0.02
 
 class PlayerBullet(pg.sprite.Sprite):
     
-    def __init__(self):
+    def __init__(self) -> None:
         pg.sprite.Sprite.__init__(self)
             
-        self.x = player.player_x 
-        self.y = player.player_y 
+        self.x, self.y = (player.player_x + player.image.get_width() // 2), (player.player_y + player.image.get_height() // 2)
+        
         
         self.image = pg.image.load(PLAYER_BULLET_IMG).convert_alpha()
         
@@ -42,6 +42,12 @@ class PlayerBullet(pg.sprite.Sprite):
             player.have_bullet = True
             self.kill()
 
+
+class EnemyBullet(pg.sprite.Sprite):
+    
+    def __init__(self) -> None:
+        pg.sprite.Sprite.__init__(self)
+        pass
         
     
 
