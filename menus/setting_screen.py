@@ -137,9 +137,9 @@ class SettingScreen:
         
         ############################################################################################
         
-        self.back_button = Button(f"< BACK",
+        self.back_button = Button(f"<<",
                                 DEFAULT_FONT_COLOR,
-                                60,
+                                25,
                                 25)
         
     def draw(self) -> None:
