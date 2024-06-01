@@ -5,7 +5,7 @@ from objects.player import player
 from objects.bullet import player_bullet, PlayerBullet
 
 from icecream import ic
-# from sfx import music_list
+from sfx.sound_list import sounds
 
 
 
@@ -80,9 +80,9 @@ def main():
             
                 if event.key == pg.K_SPACE:
                 
-                    
-                    if player.have_bullet:
                 
+                    if player.have_bullet:
+                        sounds.play_shoot_sound()
                         player_bullet.add(PlayerBullet())
                         player.have_bullet = False
                         
