@@ -5,6 +5,7 @@ from .sfx import Sound
 
 SELECT_SOUND = "material/sounds/effects/SelectBtn.wav"
 CLICK_SOUND = "material/sounds/effects/ClickBtn.wav"
+SHOOT_SOUND = "material/sounds/effects/Shoot.wav"
 
 class SoundList:
     
@@ -12,13 +13,17 @@ class SoundList:
     def __init__(self) -> None:
         self.select_sound = Sound(SELECT_SOUND)
         self.click_sound = Sound(CLICK_SOUND)
-        self.sounds_list = [self.select_sound, self.click_sound]
+        self.shoot_sound = Sound(SHOOT_SOUND)
+        self.sounds_list = [self.select_sound, self.click_sound, self.shoot_sound]
     
     def play_select_sound(self) -> None:
         self.select_sound.play_sound()
         
     def play_click_sound(self) -> None:
         self.click_sound.play_sound()
+        
+    def play_shoot_sound(self) -> None:
+        self.shoot_sound.play_sound()
         
     def change_sound_volume(self,
                             value: float) -> None:
