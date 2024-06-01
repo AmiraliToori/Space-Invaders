@@ -2,6 +2,9 @@
 import pygame as pg
 from menus import main_screen, setting_screen, intro_screen, game_screen
 from objects.player import player
+from objects.bullet import player_bullet, PlayerBullet
+
+from icecream import ic
 # from sfx import music_list
 
 
@@ -16,10 +19,7 @@ def main():
     pg.init()
     pg.mixer.init()
     
-    # screen = pg.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT], pg.RESIZABLE)
-    # screen = pg.transform.scale(screen, (windoWidth,windowHeight)) 
-    # window.blit(screen, (0, 0))
-    # screen = resolution_setting.screen.display()
+    
     run = True
     screen_number = 1 # Start screen
     # music_list.MusicList().play_main_title()
@@ -65,17 +65,31 @@ def main():
         
         if keys[pg.K_q]:
             run = False
+            
         if keys[pg.K_LEFT]:
             player.move_left()
+            
         if keys[pg.K_RIGHT]:
             player.move_right()
             
         
-        for event in pg.event.get():
             
-            if event.type == pg.VIDEORESIZE:
+        for event in pg.event.get():
+        
+            if event.type == pg.KEYDOWN:
+            
+                if event.key == pg.K_SPACE:
+                
+                    
+                    if player.have_bullet:
+                
+                        player_bullet.add(PlayerBullet())
+                        player.have_bullet = False
+                        
+                        
+            elif event.type == pg.VIDEORESIZE:
                 pass
-            if event.type == pg.QUIT:
+            elif event.type == pg.QUIT:
                 run = False
                 
         pg.display.flip()
