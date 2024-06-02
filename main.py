@@ -1,8 +1,17 @@
 
 import pygame as pg
-from menus import main_screen, setting_screen
-from sfx import music_list
 
+from menus import main_screen, setting_screen, intro_screen, game_screen
+
+from objects.player import player
+from objects.bullet import player_bullet, PlayerBullet
+from objects.enemy import enemy_gp_one, enemy_gp_two, enemy_gp_three
+from objects.timer import enemies_move_timer
+
+
+from sfx.sound_list import sounds
+
+from icecream import ic
 
 
 
@@ -15,13 +24,10 @@ def main():
     pg.init()
     pg.mixer.init()
     
-    # screen = pg.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT], pg.RESIZABLE)
-    # screen = pg.transform.scale(screen, (windoWidth,windowHeight)) 
-    # window.blit(screen, (0, 0))
-    # screen = resolution_setting.screen.display()
+    
     run = True
     screen_number = 1 # Start screen
-    music_list.MusicList().play_main_title()
+    # music_list.MusicList().play_main_title()
     
     while run:
         
@@ -29,18 +35,15 @@ def main():
             
             # First screen
             case 1:
-                
                 main_screen.main.draw()
                 screen_number = main_screen.main.update()
                 
                 
-                
             # enter intro of game
             case 2:
-                screen.fill('black')
-            
-                
-            
+                intro_screen.game_intro.draw()
+                screen_number = intro_screen.game_intro.update()
+    
             
             # enter Settings
             case 3:
@@ -49,30 +52,51 @@ def main():
             
             # enter leaderboard
             case 4:
-                screen.fill("yellow")
+                pass
                 
-            
             
             # exit button
             case 5:
-                pg.quit()
+                run = False
                 
+            # the game itself
+            case 6:
+                game_screen.game.draw()
                 
         
         keys = pg.key.get_pressed()
-        
+                   
         if keys[pg.K_q]:
             run = False
-        # if keys[pg.K_SPACE]:
-        #     screen_number = 2
-        
-        for event in pg.event.get():
             
-            if event.type == pg.VIDEORESIZE:
-                # screen = resolution_setting.screen.set_custom_display(event.w, event.h)
-                screen = pg.display.set_mode((event.w, event.h), pg.RESIZABLE)
+        if keys[pg.K_LEFT]:
+            player.move_left()
+            
+        if keys[pg.K_RIGHT]:
+            player.move_right()
+        
+        
+        
+        event_list = pg.event.get()
+        
+        for event in event_list:
+        
+            if event.type == pg.KEYDOWN:
+            
+                if event.key == pg.K_SPACE:
+                    
+                    if len(player_bullet) == 0: #TODO - Add special power (unlimited capacity for bullet) for later
+                        sounds.play_shoot_sound()
+                        player_bullet.add(PlayerBullet())
+        
+            
+            elif event.type == enemies_move_timer.get_timer_id():
+                enemy_gp_one.update()
+                enemy_gp_two.update()
+                enemy_gp_three.update()
                 
-            if event.type == pg.QUIT:
+            
+            elif event.type == pg.QUIT:
                 run = False
                 
         pg.display.flip()
