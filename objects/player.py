@@ -36,7 +36,7 @@ class Player(pg.sprite.Sprite):
         self.rect = self.image.get_rect(center = (self.player_x, self.player_y))
         self.rect.center = (self.player_x, self.player_y)
         
-        self.have_bullet = True
+        self.have_bullet = False
         
     
     def update(self):
@@ -51,11 +51,6 @@ class Player(pg.sprite.Sprite):
         if self.player_x > 0:
             self.player_x -= self.speed 
         
-
-        
-    def fire(self) -> None:
-        # if self.bullet_exist == False
-        pass
     
     def death(self) -> None:
         pass
