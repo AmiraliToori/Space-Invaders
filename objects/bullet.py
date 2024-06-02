@@ -13,7 +13,7 @@ from icecream import ic
 PLAYER_BULLET_IMG = "material/Icons/player/player-bullet-frame1.png"
 ENEMY_BULLET_IMG = "material/Icons/enemy/enemy-bullet.png"
 
-SCALE = 0.02
+SCALE = 0.03
         
 
 class PlayerBullet(pg.sprite.Sprite):
@@ -52,4 +52,6 @@ class EnemyBullet(pg.sprite.Sprite):
     
 
 player_bullet = pg.sprite.GroupSingle()
+
+player_bullet.add(PlayerBullet())
     
