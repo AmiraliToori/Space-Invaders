@@ -36,7 +36,7 @@ class Player(pg.sprite.Sprite):
         self.rect = self.image.get_rect(center = (self.player_x, self.player_y))
         self.rect.center = (self.player_x, self.player_y)
         
-        self.have_bullet = False
+        self.trigger = False
         
     
     def update(self):
