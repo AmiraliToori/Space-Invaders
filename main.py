@@ -85,10 +85,10 @@ def main():
             
                 if event.key == pg.K_SPACE:
                     
-                    if player.have_bullet:
+                    if len(player_bullet) == 0: #TODO - Add special power (unlimited capacity for bullet) for later
                         sounds.play_shoot_sound()
                         player_bullet.add(PlayerBullet())
-                        player.have_bullet = False
+        
             
             elif event.type == enemies_move_timer.get_timer_id():
                 enemy_gp_one.update()
