@@ -5,7 +5,7 @@ from menus import main_screen, setting_screen, intro_screen, game_screen
 
 from objects.player import player
 from objects.bullet import player_bullet, PlayerBullet
-from objects.enemy import enemy_gp_one
+from objects.enemy import enemy_gp_one, enemy_gp_two, enemy_gp_three
 from objects.timer import enemies_move_timer
 
 
@@ -92,6 +92,9 @@ def main():
             
             elif event.type == enemies_move_timer.get_timer_id():
                 enemy_gp_one.update()
+                enemy_gp_two.update()
+                enemy_gp_three.update()
+                
             
             elif event.type == pg.QUIT:
                 run = False
