@@ -1,12 +1,17 @@
 
 import pygame as pg
+
 from menus import main_screen, setting_screen, intro_screen, game_screen
+
 from objects.player import player
 from objects.bullet import player_bullet, PlayerBullet
+from objects.enemy import enemy_gp_one
+from objects.timer import enemies_move_timer
 
-from icecream import ic
+
 from sfx.sound_list import sounds
 
+from icecream import ic
 
 
 
@@ -47,7 +52,6 @@ def main():
             
             # enter leaderboard
             case 4:
-                # screen.fill("yellow")
                 pass
                 
             
@@ -59,10 +63,9 @@ def main():
             case 6:
                 game_screen.game.draw()
                 
-                
         
         keys = pg.key.get_pressed()
-        
+                   
         if keys[pg.K_q]:
             run = False
             
@@ -71,24 +74,25 @@ def main():
             
         if keys[pg.K_RIGHT]:
             player.move_right()
-            
         
-            
-        for event in pg.event.get():
+        
+        
+        event_list = pg.event.get()
+        
+        for event in event_list:
         
             if event.type == pg.KEYDOWN:
             
                 if event.key == pg.K_SPACE:
-                
-                
+                    
                     if player.have_bullet:
                         sounds.play_shoot_sound()
                         player_bullet.add(PlayerBullet())
                         player.have_bullet = False
-                        
-                        
-            elif event.type == pg.VIDEORESIZE:
-                pass
+            
+            elif event.type == enemies_move_timer.get_timer_id():
+                enemy_gp_one.update()
+            
             elif event.type == pg.QUIT:
                 run = False
                 
