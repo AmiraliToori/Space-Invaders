@@ -30,6 +30,6 @@ class CustomTimer:
             if current_time - self.start_time >= self.duration:
                 self.deactivate()
 
-ENEMY_DEATH_DURATION = 500
+ENEMY_DEATH_DURATION = 300
 
 enemy_death_frame_timer = CustomTimer(ENEMY_DEATH_DURATION)
