@@ -4,8 +4,10 @@
 
 
 import pygame as pg
-from graphic.resolution_setting import screen
+
 from .player import player
+
+# from .enemy import enemy_gp_one
 
 from icecream import ic
 
@@ -35,23 +37,21 @@ class PlayerBullet(pg.sprite.Sprite):
         self.rect.center = (self.x, self.y)
         
         
+        
     def update(self):
         self.rect.move_ip(0, -1)
         
         if self.rect.y < 0:
-            player.have_bullet = True
             self.kill()
-
+            
+        
 
 class EnemyBullet(pg.sprite.Sprite):
     
     def __init__(self) -> None:
         pg.sprite.Sprite.__init__(self)
-        pass
         
     
+player_bullet = pg.sprite.Group()
 
-player_bullet = pg.sprite.GroupSingle()
-
-player_bullet.add(PlayerBullet())
     
