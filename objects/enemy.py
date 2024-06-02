@@ -3,10 +3,9 @@
 
 import pygame as pg
 
-from graphic.resolution_setting import screen
+from objects.custom_timer import enemy_death_frame_timer
 
-from objects.player import player
-from objects.bullet import player_bullet
+from graphic.resolution_setting import screen
 
 from sfx.sound_list import sounds
 
@@ -76,7 +75,11 @@ class EnemyOne(pg.sprite.Sprite):
         
         self.move_right = True
         self.move_left = False
-    
+        
+        self.cooldown_death_time = 500
+        self.last_time = pg.time.get_ticks()
+
+        self.is_dead = False
     
     def update(self) -> None:
         
@@ -95,21 +98,28 @@ class EnemyOne(pg.sprite.Sprite):
                 self.move_left = False
                 self.move_right = True
                 self.rect.move_ip(0, 20)
-
-        
-        # collisions = pg.sprite.spritecollide(self, player_bullet, False)
-        # for each_enemy in collisions:
+                
+        if self.rect.y > screen.get_width(): # Silence kill, if the Invaders get out window from the bottom of screen.
+            self.kill()
             
-        #     sounds.play_invader_killed()
-        #     player.have_bullet = True
             
-        #     each_enemy.image = ENEMY_DEATH_IMG
+    def death(self):
+        if self.is_dead:
+            enemy_death_frame_timer.activate()
             
-        #     each_enemy.kill()
-    
-        
+            self.move_left = False
+            self.move_right = False
+            
+            enemy_death_frame_timer.update()
+            if not enemy_death_frame_timer.active:
+                self.kill()
         
                 
+    def set_death_image(self):
+        sounds.play_invader_killed()
+        self.image = ENEMY_DEATH_IMG
+        
+    
     
 
 example = EnemyOne(screen.get_width() // 2, screen.get_height() * 1 // 4)
