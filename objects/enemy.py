@@ -9,41 +9,40 @@ from graphic.resolution_setting import screen
 
 from sfx.sound_list import sounds
 
+from .image_func import create_image
+
 from icecream import ic
 
 SCALE = 0.04
 
+
 ENEMY_DEATH_PATH = "material/Icons/enemy/enemy-blow-effect.png"
 
-DEATH_IMAGE = pg.image.load(ENEMY_DEATH_PATH)
-
-image_width = DEATH_IMAGE.get_width()
-image_height = DEATH_IMAGE.get_height()
-
-ENEMY_DEATH_IMG = pg.transform.scale(DEATH_IMAGE, (image_width * SCALE, image_height * SCALE))
-
-
+ENEMY_DEATH_IMG = create_image(ENEMY_DEATH_PATH, SCALE)
 
 #############################################################################################
 ENEMY_TYPE_1_FRAME_ONE_PATH = "material/Icons/enemy/enemy_type1/enemy-type1-frame1.png"
 ENEMY_TYPE_1_FRAME_TWO_PATH = "material/Icons/enemy/enemy_type1/enemy-type1-frame2.png"
 
+frame_lst = [ENEMY_TYPE_1_FRAME_ONE_PATH, ENEMY_TYPE_1_FRAME_TWO_PATH]
 
-IMAGE_FILE_ONE = pg.image.load(ENEMY_TYPE_1_FRAME_ONE_PATH)
-        
-image_width = IMAGE_FILE_ONE.get_width()
-image_height = IMAGE_FILE_ONE.get_height()
-
-ENEMY_TYPE_1_IMG = pg.transform.scale(IMAGE_FILE_ONE, (image_width * SCALE, image_height * SCALE))
+enemy_one = [create_image(frame, SCALE) for frame in frame_lst]
 
 ###############################################################################################
 ENEMY_TYPE_2_FRAME_ONE_PATH = "material/Icons/enemy/enemy_type2/enemy-type2-frame1.png"
 ENEMY_TYPE_2_FRAME_TWO_PATH = "material/Icons/enemy/enemy_type2/enemy-type2-frame2.png"
 
+frame_lst = [ENEMY_TYPE_2_FRAME_ONE_PATH, ENEMY_TYPE_2_FRAME_TWO_PATH]
+
+enemy_two = [create_image(frame, SCALE) for frame in frame_lst]
 
 ################################################################################################
 ENEMY_TYPE_3_FRAME_ONE_PATH = "material/Icons/enemy/enemy_type3/enemy-type3-frame1.png"
 ENEMY_TYPE_3_FRAME_TWO_PATH = "material/Icons/enemy/enemy_type3/enemy-type3-frame2.png"
+
+frame_lst = [ENEMY_TYPE_3_FRAME_ONE_PATH, ENEMY_TYPE_3_FRAME_TWO_PATH]
+
+enemy_three = [create_image(frame, SCALE) for frame in frame_lst]
 
 #################################################################################################3
 
@@ -53,22 +52,24 @@ ENEMY_MYSTERY_DEATH_PATH = "material/Icons/enemy/mystery/mystery-blow-effect.png
 
 ENEMY_MOVE_LEFT = -10
 ENEMY_MOVE_RIGHT = 10
+ENEMY_MOVE_DOWN = 35
 
 
 
-
-class EnemyOne(pg.sprite.Sprite):
+class Enemy(pg.sprite.Sprite):
     
     
     def __init__(self,
                  x: int,
-                 y: int) -> None:
+                 y: int,
+                 enemy_frame_lst: list) -> None:
         pg.sprite.Sprite.__init__(self)
         
         self.x = x
         self.y = y
         
-        self.image = ENEMY_TYPE_1_IMG
+        self.frame_lst = enemy_frame_lst
+        self.image = self.frame_lst[0]
         
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
@@ -79,17 +80,31 @@ class EnemyOne(pg.sprite.Sprite):
         self.cooldown_death_time = 500
         self.last_time = pg.time.get_ticks()
 
+        self.frame_one = True
+        self.frame_two = False
+        
         self.is_dead = False
     
     def update(self) -> None:
+        if not self.is_dead:
+            if self.frame_one:
+                self.image = self.frame_lst[0]
+                self.frame_one = False
+                self.frame_two = True
+                
+            elif self.frame_two:
+                self.image = self.frame_lst[1]
+                self.frame_one = True
+                self.frame_two = False
         
         if self.move_right:
+            
             
             self.rect.move_ip(ENEMY_MOVE_RIGHT, 0)
             if screen.get_width() - 2 * self.image.get_width() < self.rect.x + self.image.get_width():
                 self.move_right = False
                 self.move_left = True
-                self.rect.move_ip(0, 20)
+                self.rect.move_ip(0, ENEMY_MOVE_DOWN)
             
         elif self.move_left:
 
@@ -97,7 +112,7 @@ class EnemyOne(pg.sprite.Sprite):
             if self.rect.x - self.image.get_width() < 0 + self.image.get_width():
                 self.move_left = False
                 self.move_right = True
-                self.rect.move_ip(0, 20)
+                self.rect.move_ip(0, ENEMY_MOVE_DOWN)
                 
         if self.rect.y > screen.get_width(): # Silence kill, if the Invaders get out window from the bottom of screen.
             self.kill()
@@ -122,14 +137,18 @@ class EnemyOne(pg.sprite.Sprite):
     
     
 
-example = EnemyOne(screen.get_width() // 2, screen.get_height() * 1 // 4)
-example2 = EnemyOne(screen.get_width() // 2, screen.get_height() * 3 // 8)
 enemy_gp_one = pg.sprite.Group()
-            
-            
-enemy_gp_one.add(example)
-enemy_gp_one.add(example2)
-        
+enemy_gp_two = pg.sprite.Group()
+enemy_gp_three = pg.sprite.Group()
+
+for x in range(3, 9, 1):
+    enemy_gp_one.add(Enemy(screen.get_width() * x // 12, screen.get_height() * 3 // 12, enemy_one))
+    
+for x in range(3, 9, 1):
+    enemy_gp_two.add(Enemy(screen.get_width() * x // 12, screen.get_height() * 4 // 12, enemy_two))
+    
+for x in range(3, 9, 1):
+    enemy_gp_two.add(Enemy(screen.get_width() * x // 12, screen.get_height() * 5 // 12, enemy_three))
         
     
             
