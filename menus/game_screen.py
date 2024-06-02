@@ -6,11 +6,11 @@ from graphic.resolution_setting import screen
 from objects.player import player_group
 from objects.bullet import player_bullet
 from objects.enemy import enemy_gp_one
-from objects.player import player
 
-from sfx.sound_list import sounds
 
 from icecream import ic
+
+
 
 class GameScreen:
     
@@ -31,19 +31,27 @@ class GameScreen:
         player_group.update()
         player_group.draw(self.screen)
         
-        player_bullet.update()
-        player_bullet.draw(self.screen)    
+        if len(player_bullet) == 1:
+            player_bullet.update()
+            player_bullet.draw(self.screen)    
+        
         
         enemy_gp_one.draw(self.screen)
         
+        hits = pg.sprite.groupcollide(enemy_gp_one, player_bullet, False, True)
         
-        if pg.sprite.groupcollide(enemy_gp_one, player_bullet, True, True):
-            sounds.invader_killed_sound.play_sound()
-            player.have_bullet = True
+        for enemy in hits:
+            enemy.is_dead = True
+            enemy.set_death_image()
             
-            # if pg.sprite.groupcollide(enemy_gp_one, player_bullet, True, True):
-            #     for enemy_one in enemy_gp_one:
-                    
+        for enemy in enemy_gp_one:
+            if enemy.is_dead:
+                enemy.death()
+            
+           
+           
+        
+            
         
         
 game = GameScreen(screen.display(),
