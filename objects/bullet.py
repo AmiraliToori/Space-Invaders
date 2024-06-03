@@ -2,6 +2,7 @@
 
 import pygame as pg
 
+
 from .player import player
 
 from graphic.resolution_setting import screen
@@ -36,7 +37,6 @@ class PlayerBullet(pg.sprite.Sprite):
         self.image = PLAYER_BULLET_IMG
         self.rect = self.image.get_rect()
         self.rect.center = (self.x, self.y)
-        
     
     def update(self):
         self.rect.move_ip(0, -1)
@@ -45,5 +45,32 @@ class PlayerBullet(pg.sprite.Sprite):
             self.kill()
     
 player_bullet = pg.sprite.Group()
+
+
+
+
+class EnemyBullet(pg.sprite.Sprite):
+    
+    def __init__(self,
+                 x: int,
+                 y: int) -> None:
+        pg.sprite.Sprite.__init__(self)
+        
+        self.x = x
+        self.y = y
+        
+        self.image = ENEMY_BULLET_IMG
+        
+        self.rect = self.image.get_rect()
+        self.rect.center = (self.x, self.y)
+        
+    def update(self) -> None:
+        self.rect.move_ip(0, 1)
+        
+        if self.rect.y > 0:
+            self.kill()
+        
+        
+enemy_bullet = pg.sprite.Group()
 
     
