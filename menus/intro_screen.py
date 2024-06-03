@@ -48,7 +48,7 @@ class IntroScreen:
         ####################################################################
         
         self.mystery = Image(MYSTERY_IMG,
-                             width * 8 // 48,
+                             width * 9 // 48,
                              height * 8 // 48)
         
         self.mystery_label = Text("=   ?  MYSTERY",
@@ -62,7 +62,7 @@ class IntroScreen:
         #########################################################################3
         
         self.enemy_type_3 = Image(ENEMY_TYPE_3_IMG,
-                                  width * 10 // 48,
+                                  width * 9 // 48,
                                   height * 13 // 48)
         
         self.enemy_type_3_label = Text("=    30   POINTS",
