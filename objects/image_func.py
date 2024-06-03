@@ -10,4 +10,4 @@ def create_image(image_path: str,
     image_width = image.get_width()
     image_height = image.get_height()
     
-    return pg.transform.scale(image, (image_width * scale, image_height * scale))
+    return pg.transform.smoothscale(image, (image_width * scale, image_height * scale))
