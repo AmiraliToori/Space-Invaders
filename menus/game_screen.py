@@ -5,8 +5,7 @@ from graphic.resolution_setting import screen
 
 from objects.player import player_group
 from objects.bullet import player_bullet
-from objects.enemy import enemy_gp_one, enemy_gp_two, enemy_gp_three
-
+from objects.enemy import enemy_gp
 
 from icecream import ic
 
@@ -46,28 +45,18 @@ class GameScreen:
         player_group.update()
         player_group.draw(self.screen)
         
-        if len(player_bullet) == 1:
+        if len(player_bullet) == 1: #TODO - Add power effect for unlimited magazine
             player_bullet.update()
             player_bullet.draw(self.screen)    
         
         
-        enemy_gp_one.draw(self.screen)
-        enemy_gp_two.draw(self.screen)
-        enemy_gp_three.draw(self.screen)
+        enemy_gp.draw(self.screen)
         
-        self.enemy_gps_collide(enemy_gp_one)
-        self.enemy_gps_collide(enemy_gp_two)
-        self.enemy_gps_collide(enemy_gp_three)
+        self.enemy_gps_collide(enemy_gp)
         
-        # hits = pg.sprite.groupcollide(enemy_gp_one, player_bullet, False, True)
         
-        # for enemy in hits:
-        #     enemy.is_dead = True
-        #     enemy.set_death_image()
-            
-        # for enemy in enemy_gp_one:
-        #     if enemy.is_dead:
-        #         enemy.death()
+        
+        
                 
         
 game = GameScreen(screen.display(),
