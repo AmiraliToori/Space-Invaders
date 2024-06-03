@@ -1,6 +1,8 @@
 
-from graphic.resolution_setting import screen
+
 import pygame as pg
+
+from graphic.resolution_setting import screen
 
 from icecream import ic
 
