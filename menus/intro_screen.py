@@ -48,7 +48,7 @@ class IntroScreen:
         ####################################################################
         
         self.mystery = Image(MYSTERY_IMG,
-                             width * 8 // 48,
+                             width * 7 // 48,
                              height * 8 // 48)
         
         self.mystery_label = Text("=   ?  MYSTERY",
@@ -62,15 +62,15 @@ class IntroScreen:
         #########################################################################3
         
         self.enemy_type_3 = Image(ENEMY_TYPE_3_IMG,
-                                  width * 10 // 48,
+                                  width * 9 // 48,
                                   height * 13 // 48)
         
-        self.enemy_type_3_label = Text("=    30   POINTS",
+        self.enemy_type_3_label = Text("=    3   POINTS",
                                   FONT_PATH,
                                   TITLE_FONT_SIZE,
                                   DEFAULT_FONT_COLOR,
                                   BACKGROUND_COLOR,
-                                  width * 30 // 48,
+                                  width * 29 // 48,
                                   height * 15 // 48)
         
         ###############################################################
@@ -79,12 +79,12 @@ class IntroScreen:
                                   width * 9 // 48,
                                   height * 18 // 48)
         
-        self.enemy_type_2_label = Text("=    20   POINTS",
+        self.enemy_type_2_label = Text("=    2   POINTS",
                                   FONT_PATH,
                                   TITLE_FONT_SIZE,
                                   DEFAULT_FONT_COLOR,
                                   BACKGROUND_COLOR,
-                                  width * 30 // 48,
+                                  width * 29 // 48,
                                   height * 20 // 48)
         
         #################################################################
@@ -93,12 +93,12 @@ class IntroScreen:
                                   width * 9 // 48,
                                   height * 23 // 48)
         
-        self.enemy_type_1_label = Text("=    10   POINTS",
+        self.enemy_type_1_label = Text("=    1   POINTS",
                                   FONT_PATH,
                                   TITLE_FONT_SIZE,
                                   DEFAULT_FONT_COLOR,
                                   BACKGROUND_COLOR,
-                                  width * 30 // 48,
+                                  width * 29 // 48,
                                   height * 25 // 48)
         
         #####################################################################
