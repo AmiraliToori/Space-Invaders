@@ -1,8 +1,5 @@
 
 
-
-
-
 import pygame as pg
 
 from .player import player
@@ -26,11 +23,6 @@ PLAYER_BULLET_IMG = create_image(PLAYER_BULLET_IMG_PATH, SCALE)
 ENEMY_BULLET_IMG_PATH = "material/Icons/enemy/enemy-bullet.png"
 
 ENEMY_BULLET_IMG = create_image(ENEMY_BULLET_IMG_PATH, SCALE)
-
-
-        
-
-
 
 
 class PlayerBullet(pg.sprite.Sprite):
