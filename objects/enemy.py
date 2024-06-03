@@ -142,13 +142,13 @@ enemy_gp_two = pg.sprite.Group()
 enemy_gp_three = pg.sprite.Group()
 
 for x in range(3, 9, 1):
-    enemy_gp_one.add(Enemy(screen.get_width() * x // 12, screen.get_height() * 3 // 12, enemy_one))
+    enemy_gp_one.add(Enemy(screen.get_width() * x // 12, screen.get_height() * 5 // 12, enemy_one))
     
 for x in range(3, 9, 1):
     enemy_gp_two.add(Enemy(screen.get_width() * x // 12, screen.get_height() * 4 // 12, enemy_two))
     
 for x in range(3, 9, 1):
-    enemy_gp_two.add(Enemy(screen.get_width() * x // 12, screen.get_height() * 5 // 12, enemy_three))
+    enemy_gp_two.add(Enemy(screen.get_width() * x // 12, screen.get_height() * 3 // 12, enemy_three))
         
     
             
