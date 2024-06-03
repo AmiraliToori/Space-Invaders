@@ -1,7 +1,11 @@
 
 import pygame as pg
+import random
+
 
 from objects.custom_timer import enemy_death_frame_timer
+from objects.player import player
+
 
 from graphic.resolution_setting import screen
 
@@ -21,24 +25,27 @@ ENEMY_DEATH_IMG = create_image(ENEMY_DEATH_PATH, SCALE)
 #############################################################################################
 ENEMY_TYPE_1_FRAME_ONE_PATH = "material/Icons/enemy/enemy_type1/enemy-type1-frame1.png"
 ENEMY_TYPE_1_FRAME_TWO_PATH = "material/Icons/enemy/enemy_type1/enemy-type1-frame2.png"
+ENEMY_TYPE_1_BLOW_EFFECT_PATH = "material/Icons/enemy/enemy_type1/enemy-type1-blow-effect.png"
 
-frame_lst = [ENEMY_TYPE_1_FRAME_ONE_PATH, ENEMY_TYPE_1_FRAME_TWO_PATH]
+frame_lst = [ENEMY_TYPE_1_FRAME_ONE_PATH, ENEMY_TYPE_1_FRAME_TWO_PATH, ENEMY_TYPE_1_BLOW_EFFECT_PATH]
 
 enemy_one = [create_image(frame, SCALE) for frame in frame_lst]
 
 ###############################################################################################
 ENEMY_TYPE_2_FRAME_ONE_PATH = "material/Icons/enemy/enemy_type2/enemy-type2-frame1.png"
 ENEMY_TYPE_2_FRAME_TWO_PATH = "material/Icons/enemy/enemy_type2/enemy-type2-frame2.png"
+ENEMY_TYPE_2_BLOW_EFFECT_PATH = "material/Icons/enemy/enemy_type2/enemy-type2-blow-effect.png"
 
-frame_lst = [ENEMY_TYPE_2_FRAME_ONE_PATH, ENEMY_TYPE_2_FRAME_TWO_PATH]
+frame_lst = [ENEMY_TYPE_2_FRAME_ONE_PATH, ENEMY_TYPE_2_FRAME_TWO_PATH, ENEMY_TYPE_2_BLOW_EFFECT_PATH]
 
 enemy_two = [create_image(frame, SCALE) for frame in frame_lst]
 
 ################################################################################################
 ENEMY_TYPE_3_FRAME_ONE_PATH = "material/Icons/enemy/enemy_type3/enemy-type3-frame1.png"
 ENEMY_TYPE_3_FRAME_TWO_PATH = "material/Icons/enemy/enemy_type3/enemy-type3-frame2.png"
+ENEMY_TYPE_3_BLOW_EFFECT_PATH = "material/Icons/enemy/enemy_type3/enemy-type3-blow-effect.png"
 
-frame_lst = [ENEMY_TYPE_3_FRAME_ONE_PATH, ENEMY_TYPE_3_FRAME_TWO_PATH]
+frame_lst = [ENEMY_TYPE_3_FRAME_ONE_PATH, ENEMY_TYPE_3_FRAME_TWO_PATH, ENEMY_TYPE_3_BLOW_EFFECT_PATH]
 
 enemy_three = [create_image(frame, SCALE) for frame in frame_lst]
 
@@ -113,11 +120,13 @@ class Enemy(pg.sprite.Sprite):
     def __init__(self,
                  x: int,
                  y: int,
-                 enemy_frame_lst: list) -> None:
+                 enemy_frame_lst: list,
+                 enemy_type: int) -> None:
         pg.sprite.Sprite.__init__(self)
         
         self.x = x
         self.y = y
+        self.enemy_type = enemy_type
         
         self.frame_lst = enemy_frame_lst
         self.image = self.frame_lst[0]
@@ -171,26 +180,48 @@ class Enemy(pg.sprite.Sprite):
                 
     def set_death_image(self):
         sounds.play_invader_killed()
-        self.image = ENEMY_DEATH_IMG
+        self.image = self.frame_lst[2]
         
+    # def fire(self):
+        
+    #     fire_choice = random.choices([1, 0], [0.1, 99.9])
+    #     if fire_choice[0] == 1:
+    #         enemy_bullet.add(EnemyBullet(self.rect.x, self.rect.y))
+            
+        
+        
+        
+class Mystery(Enemy):
     
+    def __init__(self,
+                 x: int,
+                 y: int,
+                 enemy_frame_lst: list,
+                 enemy_type: int) -> None:
+        super().__init__(x, y, enemy_frame_lst, enemy_type)
+    
+    
+    
+        
+mystery = pg.sprite.GroupSingle()
 enemy_gp = pg.sprite.Group()
 
 
+
 for x in range(2, 35, 3):
-    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 9 // 48, enemy_three))
+    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 9 // 48, enemy_three, 3))
     
 for x in range(2, 35, 3):
-    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 12 // 48, enemy_two))
+    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 12 // 48, enemy_two, 2))
     
 for x in range(2, 35, 3):
-    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 15 // 48, enemy_two))
+    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 15 // 48, enemy_two, 2))
     
 for x in range(2, 35, 3):
-    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 18 // 48, enemy_one))
+    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 18 // 48, enemy_one, 1))
     
 for x in range(2, 35, 3):
-    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 21 // 48, enemy_one))
+    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 21 // 48, enemy_one, 1))
         
 enemy_box = EnemyBox(enemy_gp)
             
