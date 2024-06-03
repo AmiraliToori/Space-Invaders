@@ -48,7 +48,7 @@ class IntroScreen:
         ####################################################################
         
         self.mystery = Image(MYSTERY_IMG,
-                             width * 9 // 48,
+                             width * 7 // 48,
                              height * 8 // 48)
         
         self.mystery_label = Text("=   ?  MYSTERY",
