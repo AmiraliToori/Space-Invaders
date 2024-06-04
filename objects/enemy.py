@@ -1,9 +1,9 @@
 
 import pygame as pg
-import random
 
 
-from objects.custom_timer import enemy_death_frame_timer
+
+from objects.tools.custom_timer import enemy_death_frame_timer
 from objects.player import player
 
 
@@ -11,7 +11,7 @@ from graphic.resolution_setting import screen
 
 from sfx.sound_list import sounds
 
-from .image_func import create_image
+from .tools.image_func import create_image
 
 from icecream import ic
 
@@ -182,11 +182,7 @@ class Enemy(pg.sprite.Sprite):
         sounds.play_invader_killed()
         self.image = self.frame_lst[2]
         
-    # def fire(self):
-        
-    #     fire_choice = random.choices([1, 0], [0.1, 99.9])
-    #     if fire_choice[0] == 1:
-    #         enemy_bullet.add(EnemyBullet(self.rect.x, self.rect.y))
+    
             
         
         
