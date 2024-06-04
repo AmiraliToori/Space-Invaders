@@ -6,8 +6,12 @@ from graphic.resolution_setting import screen
 
 from objects.player import player_group, player
 from objects.bullet import player_bullet, enemy_bullet, EnemyBullet
-from objects.enemy import enemy_gp
+from objects.enemy import enemy_gp, mystery_gp, Mystery
+
 from objects.tools.text import Text
+from objects.tools.pause import pause
+
+from sfx.sound_list import sounds
 
 from icecream import ic
 
@@ -73,7 +77,7 @@ class GameScreen:
         player_group.draw(self.screen)
         
         ################################################################################
-        if len(player_bullet) == 1:                                  #TODO - Add power effect for unlimited magazine
+        if len(player_bullet) == 1:    #TODO - Add power effect for unlimited magazine
             player_bullet.update()
             player_bullet.draw(self.screen)    
         ##################################################################################
@@ -94,6 +98,7 @@ class GameScreen:
         # enemy_bullet.update()
         enemy_bullet.draw(self.screen)  
         
+        #######################################################################################
         
         for enemy in enemy_gp.sprites():
             fire = random.choices([1,0], [0.001, 99.999])[0]
@@ -102,9 +107,23 @@ class GameScreen:
                 enemy_bullet.add(EnemyBullet(enemy.rect.x + enemy.image.get_width() // 2, enemy.rect.y + enemy.image.get_height() // 2))
         
         if len(enemy_gp.sprites()) == 0:
-            pass
+            player.is_win = True
+            # pause.change_pause_state()
+            sounds.play_victory_sound() #FIXME - The victory sound is get stuck in loop and play and play again
+            
+        # ic(player.rect)
+        # if pg.sprite.groupcollide(player_group, enemy_gp, False, False):
+        #     player.death()
+        #     pause.change_pause_state() #FIXME - Fix the issue with the collide the player with the enemies which gives error
         
-        
+        if len(mystery_gp.sprites()) == 0:
+            trigger = random.choices([1,0], [0.5, 99.5])[0]
+            
+            if trigger:
+                mystery_gp.add(Mystery())
+                
+        mystery_gp.update()
+        mystery_gp.draw(self.screen)
         
 game = GameScreen(screen.display(),
                   screen.get_width(),
