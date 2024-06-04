@@ -61,12 +61,6 @@ class MainScreen:
                                         width // 2,
                                         height * 6 // 12)
         
-        self.users_btn = Button("Users",
-                                FONT_SIZE,
-                                DEFAULT_FONT_COLOR,
-                                width // 2,
-                                height * 7 // 12)
-        
         
         self.exit_btn = Button("EXIT",
                                FONT_SIZE,
@@ -86,8 +80,6 @@ class MainScreen:
         setting_flag = self.setting_btn.draw(self.screen, GREEN_HOVER)
             
         leaderboard_flag = self.leaderboard_btn.draw(self.screen, GREEN_HOVER)
-
-        users_flag = self.users_btn.draw(self.screen, GREEN_HOVER)
     
         exit_flag = self.exit_btn.draw(self.screen, RED_HOVER)
         
@@ -98,8 +90,6 @@ class MainScreen:
             self.screen_number = 3
         if leaderboard_flag:
             self.screen_number = 4
-        if users_flag:
-            self.screen_number = 5
         if exit_flag:
             self.screen_number = 7
         
