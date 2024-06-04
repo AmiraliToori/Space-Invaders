@@ -24,7 +24,7 @@ class Player(pg.sprite.Sprite):
         self.name = name
         self.health = 3
         self.score = 0
-        self.speed = 1
+        self.speed = 4
         
         self.player_x = screen.get_width() // 2
         self.player_y = screen.get_height() * 44 // 48
