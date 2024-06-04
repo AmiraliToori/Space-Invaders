@@ -5,13 +5,14 @@ from icecream import ic
 sys.path.append('/home/glados/Documents/AmirAli Toori/Lessons/Python/Space-Invaders')
 
 
-from objects.button import SettingButton, Button
-from objects.text import Text
+from objects.tools.button import SettingButton, Button
+from objects.tools.text import Text
 from sfx import configuration_volume
 from graphic import resolution_setting
 
 # Font
 FONT_PATH = "material/font/Pixelify_Sans/PixelifySans-VariableFont_wght.ttf"
+FONT_SIZE = 40
 DEFAULT_FONT_COLOR = "white"
 BACKGROUND_COLOR = "black"
 
@@ -69,11 +70,13 @@ class SettingScreen:
                                     height * 6 // 12)
         
         self.volume_up_music = SettingButton(f">",
+                                             FONT_SIZE,
                                     DEFAULT_FONT_COLOR,
                                     width * 3 // 4 + VOLUME_BUTTON_OFFSET,
                                     height * 6 // 12)
         
         self.volume_down_music = SettingButton(f"<",
+                                               FONT_SIZE,
                                     DEFAULT_FONT_COLOR,
                                     width * 3 // 4 - VOLUME_BUTTON_OFFSET,
                                     height * 6 // 12)
@@ -97,11 +100,13 @@ class SettingScreen:
         
         
         self.volume_up_sound = SettingButton(f">",
+                                             FONT_SIZE,
                                     DEFAULT_FONT_COLOR,
                                     width * 3 // 4 + VOLUME_BUTTON_OFFSET,
                                     height * 8 // 12)
         
         self.volume_down_sound = SettingButton(f"<",
+                                               FONT_SIZE,
                                     DEFAULT_FONT_COLOR,
                                     width * 3 // 4 - VOLUME_BUTTON_OFFSET,
                                     height * 8 // 12)
@@ -126,11 +131,13 @@ class SettingScreen:
         
         
         self.increase_resolution = SettingButton(f">",
+                                                 40,
                                     DEFAULT_FONT_COLOR,
                                     width * 3 // 4 + RESOLUTION_BUTTON_OFFSET,
                                     height * 4 // 12)
         
         self.decrease_resolution = SettingButton(f"<",
+                                                 40,
                                     DEFAULT_FONT_COLOR,
                                     width * 3 // 4 - RESOLUTION_BUTTON_OFFSET,
                                     height * 4 // 12)
@@ -138,6 +145,7 @@ class SettingScreen:
         ############################################################################################
         
         self.back_button = Button(f"<<",
+                                  FONT_SIZE,
                                 DEFAULT_FONT_COLOR,
                                 25,
                                 25)
