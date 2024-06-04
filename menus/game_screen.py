@@ -7,7 +7,7 @@ from graphic.resolution_setting import screen
 from objects.player import player_group, player
 from objects.bullet import player_bullet, enemy_bullet, EnemyBullet
 from objects.enemy import enemy_gp
-from objects.text import Text
+from objects.tools.text import Text
 
 from icecream import ic
 
@@ -31,6 +31,14 @@ class GameScreen:
                                 "#06ff06",
                                 "black",
                                 80,
+                                20)
+        
+        self.lives_label = Text(f"LIVES: {player.health}",
+                                FONT_PATH,
+                                30,
+                                "#06ff06",
+                                "black",
+                                730,
                                 20)
     
     
@@ -60,34 +68,43 @@ class GameScreen:
     def draw(self) -> None:
         self.screen.fill('black')
         
+        ######################################################
         player_group.update()
         player_group.draw(self.screen)
         
-        if len(player_bullet) == 1: #TODO - Add power effect for unlimited magazine
+        ################################################################################
+        if len(player_bullet) == 1:                                  #TODO - Add power effect for unlimited magazine
             player_bullet.update()
             player_bullet.draw(self.screen)    
-        
+        ##################################################################################
         
         enemy_gp.draw(self.screen)
         
+        ##################################################################################
         self.enemy_gps_collide(enemy_gp)
         
+        ####################################################################################
         self.score_label.draw(self.screen)
         self.score_label.update(f"SCORE: {player.score}")
         
-        enemy_bullet.update()
+        self.lives_label.draw(self.screen)
+        self.lives_label.update(f"LIVES: {player.health}")
+        ######################################################################################
+        
+        # enemy_bullet.update()
         enemy_bullet.draw(self.screen)  
         
         
-        for bullet in enemy_bullet.sprites():
-            ic(bullet.x, bullet.y)
-            
         for enemy in enemy_gp.sprites():
-            fire = random.choices([1,0], [0.1, 99.9])[0]
-            if fire:
-                enemy_bullet.add(EnemyBullet(enemy.rect.x, enemy.rect.y))
-             
-              
+            fire = random.choices([1,0], [0.001, 99.999])[0]
+            
+            if fire == 1:
+                enemy_bullet.add(EnemyBullet(enemy.rect.x + enemy.image.get_width() // 2, enemy.rect.y + enemy.image.get_height() // 2))
+        
+        if len(enemy_gp.sprites()) == 0:
+            pass
+        
+        
         
 game = GameScreen(screen.display(),
                   screen.get_width(),
