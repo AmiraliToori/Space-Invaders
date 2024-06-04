@@ -7,7 +7,7 @@ from .player import player
 
 from graphic.resolution_setting import screen
 
-from .image_func import create_image
+from .tools.image_func import create_image
 
 from icecream import ic
 
@@ -39,7 +39,7 @@ class PlayerBullet(pg.sprite.Sprite):
         self.rect.center = (self.x, self.y)
     
     def update(self):
-        self.rect.move_ip(0, -1)
+        self.rect.move_ip(0, -4)
         
         if self.rect.y < 0:
             self.kill()

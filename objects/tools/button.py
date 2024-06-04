@@ -6,13 +6,13 @@ from sfx import sound_list
 
 
 MAIN_FONT_PATH = "material/font/Pixelify_Sans/PixelifySans-VariableFont_wght.ttf"
-FONT_SIZE = 40
 ANTI_ALIAS = True
 
 class Button:
     
     def __init__(self,
                  text_input: str,
+                 font_size: int,
                  color: str,
                  x_pos: int,
                  y_pos: int) -> None:
@@ -21,10 +21,10 @@ class Button:
         self.y_pos = y_pos
         
         self.color = color
-        
+        self.font_size = font_size
         self.text_input = text_input
         
-        self.text = pg.font.Font(MAIN_FONT_PATH, FONT_SIZE)
+        self.text = pg.font.Font(MAIN_FONT_PATH, self.font_size)
         self.text_box = self.text.render(text_input,
                                      ANTI_ALIAS,
                                      color)
@@ -71,10 +71,11 @@ class SettingButton(Button):
     
     def __init__(self,
                  text_input: str,
+                 font_size: int,
                  color: str,
                  x_pos: int,
                  y_pos: int) -> None:
-        super().__init__(text_input, color, x_pos, y_pos)
+        super().__init__(text_input, font_size,color, x_pos, y_pos)
         
     def draw(self, screen, hover_color, command) -> None:
         

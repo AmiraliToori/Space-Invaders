@@ -1,8 +1,8 @@
 
 
-from objects.text import Text
-from objects.button import Button
-from objects.image import Image
+from objects.tools.text import Text
+from objects.tools.button import Button
+from objects.tools.image import Image
 from graphic import resolution_setting
 
 # Font
@@ -104,6 +104,7 @@ class IntroScreen:
         #####################################################################
         
         self.play_button = Button("CLICK HERE TO PLAY!",
+                                  40,
                                   DEFAULT_FONT_COLOR,
                                   width * 24 // 48,
                                   height * 32 // 48)
@@ -111,6 +112,7 @@ class IntroScreen:
         #######################################################################
         
         self.back_button = Button("<<",
+                                  40,
                                   DEFAULT_FONT_COLOR,
                                   25,
                                   25)

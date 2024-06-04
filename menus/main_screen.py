@@ -6,12 +6,13 @@ import sys
 sys.path.append('/home/glados/Documents/AmirAli Toori/Lessons/Python/Space-Invaders')
 
 import pygame as pg
-from objects.button import Button
-from objects.text import Text
+from objects.tools.button import Button
+from objects.tools.text import Text
 from graphic import resolution_setting
 
 # Font
 FONT_PATH = "material/font/Pixelify_Sans/PixelifySans-VariableFont_wght.ttf"
+FONT_SIZE = 40
 DEFAULT_FONT_COLOR = "white"
 BACKGROUND_COLOR = "black"
 
@@ -43,21 +44,26 @@ class MainScreen:
                                     height * 1 // 5)
         
         self.start_btn = Button("Start",
+                                FONT_SIZE,
                                     DEFAULT_FONT_COLOR,
                                     width // 2,
                                     height * 4 // 12)
         
         self.setting_btn = Button("Setting",
+                                  FONT_SIZE,
                                     DEFAULT_FONT_COLOR,
                                     width // 2,
                                     height * 5 // 12)
         
         self.leaderboard_btn = Button("Leaderboard",
+                                      FONT_SIZE,
                                         DEFAULT_FONT_COLOR,
                                         width // 2,
                                         height * 6 // 12)
         
+        
         self.exit_btn = Button("EXIT",
+                               FONT_SIZE,
                                     DEFAULT_FONT_COLOR,
                                     width // 2,
                                     height * 9 // 12)
@@ -74,7 +80,7 @@ class MainScreen:
         setting_flag = self.setting_btn.draw(self.screen, GREEN_HOVER)
             
         leaderboard_flag = self.leaderboard_btn.draw(self.screen, GREEN_HOVER)
-            
+    
         exit_flag = self.exit_btn.draw(self.screen, RED_HOVER)
         
         
@@ -85,7 +91,7 @@ class MainScreen:
         if leaderboard_flag:
             self.screen_number = 4
         if exit_flag:
-            self.screen_number = 5
+            self.screen_number = 7
         
         
     def update(self) -> int:

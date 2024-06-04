@@ -1,18 +1,18 @@
 
 import pygame as pg
 
-from menus import main_screen, setting_screen, intro_screen, game_screen
+from menus import main_screen, setting_screen, intro_screen, game_screen, game_popup, leaderboard_surface
 
 from objects.player import player
 from objects.bullet import player_bullet, PlayerBullet
 from objects.enemy import enemy_gp, enemy_box
-from objects.timer import enemies_move_timer
 
+from objects.tools.timer import enemies_move_timer
+from objects.tools.pause import pause
 
 from sfx.sound_list import sounds
 
 from icecream import ic
-
 
 
 # MUSIC FILES PATH
@@ -24,7 +24,7 @@ def main():
     pg.init()
     pg.mixer.init()
     
-    
+    clock = pg.time.Clock()
     run = True
     screen_number = 1 # Start screen
     # music_list.MusicList().play_main_title()
@@ -52,16 +52,27 @@ def main():
             
             # enter leaderboard
             case 4:
-                pass
+                leaderboard_surface.leaderboard_screen.draw()
+                screen_number = leaderboard_surface.leaderboard_screen.update()
                 
-            
             # exit button
             case 5:
                 run = False
                 
             # the game itself
             case 6:
-                game_screen.game.draw()
+                if not pause.pause_state:
+                    game_screen.game.draw()
+                else:
+                    game_popup.pause_popup.draw()
+                    screen_number = game_popup.pause_popup.update()
+                    
+                if player.is_win:
+                    game_popup.victory_popup.draw()
+                    screen_number = game_popup.victory_popup.update()
+                    
+            case 7:
+                pass
                 
         
         keys = pg.key.get_pressed()
@@ -83,16 +94,20 @@ def main():
         
             if event.type == pg.KEYDOWN:
             
-                if event.key == pg.K_SPACE:
+                if event.key == pg.K_SPACE and screen_number == 6 and not pause.pause_state:
                     
                     if len(player_bullet) == 0: #TODO - Add special power (unlimited capacity for bullet) for later
                         sounds.play_shoot_sound()
                         player_bullet.add(PlayerBullet())
+                        
+                elif event.key == pg.K_ESCAPE and screen_number == 6:
+                    pause.change_pause_state()
         
             
-            elif event.type == enemies_move_timer.get_timer_id():
+            elif event.type == enemies_move_timer.get_timer_id() and not pause.pause_state and screen_number == 6:
                 
                 enemy_gp.update()
+                
                 enemy_box.update_group(enemy_gp)
                 enemy_box.box_movement()
                 
@@ -100,6 +115,7 @@ def main():
             elif event.type == pg.QUIT:
                 run = False
                 
+        clock.tick(60)
         pg.display.flip()
 
 

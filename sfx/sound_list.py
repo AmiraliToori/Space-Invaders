@@ -7,6 +7,8 @@ SELECT_SOUND = "material/sounds/effects/SelectBtn.wav"
 CLICK_SOUND = "material/sounds/effects/ClickBtn.wav"
 SHOOT_SOUND = "material/sounds/effects/Shoot.wav"
 INVADER_KILLED_SOUND = "material/sounds/effects/InvaderKilled.wav"
+PLAYER_EXPLOSION_SOUND = "material/sounds/effects/PlayerExplosion.wav"
+VICTORY_SOUND = "material/sounds/effects/VictorySound.mp3"
 
 class SoundList:
     
@@ -16,8 +18,10 @@ class SoundList:
         self.click_sound = Sound(CLICK_SOUND)
         self.shoot_sound = Sound(SHOOT_SOUND)
         self.invader_killed_sound = Sound(INVADER_KILLED_SOUND)
+        self.player_explosion_sound = Sound(PLAYER_EXPLOSION_SOUND)
+        self.victory_sound = Sound(VICTORY_SOUND)
         
-        self.sounds_list = [self.select_sound, self.click_sound, self.shoot_sound, self.invader_killed_sound]
+        self.sounds_list = [self.select_sound, self.click_sound, self.shoot_sound, self.invader_killed_sound, self.player_explosion_sound, self.victory_sound]
     
     def play_select_sound(self) -> None:
         self.select_sound.play_sound()
@@ -30,6 +34,12 @@ class SoundList:
         
     def play_invader_killed(self) -> None:
         self.invader_killed_sound.play_sound()
+        
+    def play_player_explosion_sound(self) -> None:
+        self.player_explosion_sound.play_sound()
+        
+    def play_victory_sound(self) -> None:
+        self.victory_sound.play_sound()
         
     def change_sound_volume(self,
                             value: float) -> None:

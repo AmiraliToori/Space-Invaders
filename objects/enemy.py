@@ -1,9 +1,9 @@
 
 import pygame as pg
-import random
 
 
-from objects.custom_timer import enemy_death_frame_timer
+
+from objects.tools.custom_timer import enemy_death_frame_timer
 from objects.player import player
 
 
@@ -11,7 +11,7 @@ from graphic.resolution_setting import screen
 
 from sfx.sound_list import sounds
 
-from .image_func import create_image
+from .tools.image_func import create_image
 
 from icecream import ic
 
@@ -54,6 +54,9 @@ enemy_three = [create_image(frame, SCALE) for frame in frame_lst]
 ENEMY_MYSTERY_PATH = "material/Icons/enemy/mystery/mystery-frame1.png"
 ENEMY_MYSTERY_DEATH_PATH = "material/Icons/enemy/mystery/mystery-blow-effect.png"
 
+frame_lst = [ENEMY_MYSTERY_PATH, ENEMY_DEATH_PATH]
+
+mystery = [create_image(frame, SCALE) for frame in frame_lst]
 
 ENEMY_MOVE_LEFT = -10
 ENEMY_MOVE_RIGHT = 10
@@ -69,7 +72,7 @@ class EnemyBox:
         self.move_to_left_toggle = False
         self.move_to_down = False
         
-    def box_movement(self):
+    def box_movement(self): #FIXME - Fix the issue with enemy box movement from down to left, which is not direct move to down
         
         if [enemy for enemy in self.group.sprites() if enemy.rect.x + enemy.image.get_width() * 2 >= screen.get_width()]:
             self.move_to_left_toggle = True
@@ -177,33 +180,39 @@ class Enemy(pg.sprite.Sprite):
             if not enemy_death_frame_timer.active:
                 self.kill()
         
-                
     def set_death_image(self):
         sounds.play_invader_killed()
         self.image = self.frame_lst[2]
         
-    # def fire(self):
-        
-    #     fire_choice = random.choices([1, 0], [0.1, 99.9])
-    #     if fire_choice[0] == 1:
-    #         enemy_bullet.add(EnemyBullet(self.rect.x, self.rect.y))
+    
             
         
         
         
-class Mystery(Enemy):
+class Mystery(pg.sprite.Sprite):
     
-    def __init__(self,
-                 x: int,
-                 y: int,
-                 enemy_frame_lst: list,
-                 enemy_type: int) -> None:
-        super().__init__(x, y, enemy_frame_lst, enemy_type)
+    def __init__(self) -> None:
+        
+        pg.sprite.Sprite.__init__(self)
+        self.x = 800
+        self.y = 70
+        
+        self.enemy_type = 4
+        
+        self.image = mystery[0]
+        
+        self.rect = self.image.get_rect()
+        self.rect.center = (self.x, self.y)
     
     
+    def update(self) -> None:
+        self.rect.move_ip(-2 ,0)
+        
+        if self.rect.x + self.image.get_width() < 0:
+            self.kill()
     
         
-mystery = pg.sprite.GroupSingle()
+mystery_gp = pg.sprite.GroupSingle()
 enemy_gp = pg.sprite.Group()
 
 
