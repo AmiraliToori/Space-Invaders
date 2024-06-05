@@ -2,9 +2,12 @@
 import pygame as pg
 
 from graphic.resolution_setting import screen
+
 from objects.tools.text import Text
 from objects.tools.button import Button
 from objects.tools.pause import pause
+
+from objects.player import player
 
 # Font
 FONT_PATH = "material/font/Pixelify_Sans/PixelifySans-VariableFont_wght.ttf"
@@ -31,7 +34,7 @@ class PauseSurface:
         self.height = height
         self.screen_number = 6
         
-        self.surface = pg.Surface((screen.get_width(), screen.get_height()), pg.SRCALPHA)
+        self.surface = pg.Surface((self.screen.get_width(), self.screen.get_height()), pg.SRCALPHA)
         
         
         
@@ -154,14 +157,22 @@ class VictorySurface(PauseSurface):
                                 DEFAULT_FONT_COLOR,
                                 BACKGROUND_COLOR,
                                 width // 2,
-                                height * 1 // 2
+                                height * 26 // 48
                                 )
-
+        
+        self.details = Text(f"{player.name}       SCORE: {player.score}",
+                            FONT_PATH,
+                            FONT_SIZE,
+                            "#06ff06",
+                            BACKGROUND_COLOR,
+                            width // 2,
+                            height * 29 // 48)
+        
         self.exit_button = Button("<EXIT>",
                                 FONT_SIZE,
                                 DEFAULT_FONT_COLOR,
                                 width // 2,
-                                height * 14 // 24)
+                                height * 16 // 24)
         
     
     def draw(self) -> None:
@@ -170,9 +181,12 @@ class VictorySurface(PauseSurface):
         
         self.black_rect = pg.draw.rect(self.surface,
                                        '#06ff06',
-                                       (30, self.height // 2 - 20, self.width - 58, self.height * 8 // 48), 2)
+                                       (30, self.height // 2, self.width - 58, self.height * 11 // 48), 2)
         self.victory_label.draw(self.surface)
         exit_flag = self.exit_button.draw(self.surface, RED_HOVER)
+        
+        self.details.draw(self.screen)
+        self.details.update(f"{player.name}       SCORE: {player.score}")
         
         if exit_flag:
             self.screen_number = 5
