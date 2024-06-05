@@ -4,6 +4,7 @@ import pygame as pg
 
 from graphic.resolution_setting import screen
 from .tools.image_func import create_image
+from .user import user_list
 
 from sfx. sound_list import sounds
 
@@ -21,12 +22,11 @@ enemy_death_frames = [create_image(frame, SCALE) for frame in frame_lst]
 
 class Player(pg.sprite.Sprite):
     
-    def __init__(self,
-                 name: str) -> None:
+    def __init__(self) -> None:
         
         pg.sprite.Sprite.__init__(self)
         
-        self.name = name
+        self.name = user_list.get_current_value()
         self.health = 3
         self.score = 0
         self.speed = 4
@@ -64,8 +64,11 @@ class Player(pg.sprite.Sprite):
         self.image = enemy_death_frames[0]
         sounds.play_player_explosion_sound()
         
+    def player_name_update(self) -> None:
+        self.name = user_list.get_current_value()
+        
     
-player = Player("PLAYER")
+player = Player()
 player_group = pg.sprite.GroupSingle()
 
 player_group.add(player)
