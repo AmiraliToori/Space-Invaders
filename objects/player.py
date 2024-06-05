@@ -45,6 +45,7 @@ class Player(pg.sprite.Sprite):
         
         self.trigger = False
         self.is_win = False
+        self.unlimited_gun = False
         
     
     def update(self):
