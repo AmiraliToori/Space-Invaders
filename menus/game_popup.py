@@ -93,20 +93,29 @@ class GameOverSurface(PauseSurface):
         super().__init__(screen, width, height)
         
         
-        self.game_over_label = Text("GAME-OVER",
+        self.label = Text("GAME-OVER",
                                 FONT_PATH,
                                 FONT_SIZE,
                                 DEFAULT_FONT_COLOR,
                                 BACKGROUND_COLOR,
                                 width // 2,
-                                height * 1 // 2
+                                height * 21 // 48
                                 )
 
+        self.details = Text(f"{player.name}       SCORE: {player.score}",
+                            FONT_PATH,
+                            FONT_SIZE,
+                            "#06ff06",
+                            BACKGROUND_COLOR,
+                            width // 2,
+                            height * 27 // 48)
+        
         self.exit_button = Button("<EXIT>",
                                 FONT_SIZE,
                                 DEFAULT_FONT_COLOR,
                                 width // 2,
-                                height * 14 // 24)
+                                height * 31 // 48)
+        
         
     
     def draw(self) -> None:
@@ -115,20 +124,12 @@ class GameOverSurface(PauseSurface):
         
         self.black_rect = pg.draw.rect(self.surface,
                                        '#06ff06',
-                                       (30, self.height // 2 - 20, self.width - 58, self.height * 8 // 48), 2)
-        self.game_over_label.draw(self.surface)
+                                       (30, self.height // 2 - 20, self.width - 58, self.height * 11 // 48), 2)
+        self.label.draw(self.surface)
         exit_flag = self.exit_button.draw(self.surface, RED_HOVER)
         
-        if exit_flag:
-            self.screen_number = 5
-            pause.pause_state = False
-        self.screen.blit(self.surface, (0, 0))
-        
-        self.black_rect = pg.draw.rect(self.surface,
-                                       '#06ff06',
-                                       (30, self.height // 2 - 20, self.width - 58, self.height * 8 // 48))
-        self.game_over_label.draw(self.surface)
-        exit_flag = self.exit_button.draw(self.surface, RED_HOVER)
+        self.details.draw(self.surface)
+        self.details.update(f"{player.name}       SCORE: {player.score}")
         
         if exit_flag:
             self.screen_number = 5
@@ -141,7 +142,7 @@ gameover_popup = GameOverSurface(screen.display(),
 ##########################################################################################################  
       
       
-class VictorySurface(PauseSurface):
+class VictorySurface(GameOverSurface):
     
     
     def __init__(self,
@@ -151,46 +152,15 @@ class VictorySurface(PauseSurface):
         super().__init__(screen, width, height)
         
         
-        self.victory_label = Text("VICTORY",
+        self.label = Text("VICTORY",
                                 FONT_PATH,
                                 FONT_SIZE,
                                 DEFAULT_FONT_COLOR,
                                 BACKGROUND_COLOR,
                                 width // 2,
-                                height * 26 // 48
+                                height * 24 // 48
                                 )
         
-        self.details = Text(f"{player.name}       SCORE: {player.score}",
-                            FONT_PATH,
-                            FONT_SIZE,
-                            "#06ff06",
-                            BACKGROUND_COLOR,
-                            width // 2,
-                            height * 29 // 48)
-        
-        self.exit_button = Button("<EXIT>",
-                                FONT_SIZE,
-                                DEFAULT_FONT_COLOR,
-                                width // 2,
-                                height * 16 // 24)
-        
-    
-    def draw(self) -> None:
-        
-        self.screen.blit(self.surface, (0, 0))
-        
-        self.black_rect = pg.draw.rect(self.surface,
-                                       '#06ff06',
-                                       (30, self.height // 2, self.width - 58, self.height * 11 // 48), 2)
-        self.victory_label.draw(self.surface)
-        exit_flag = self.exit_button.draw(self.surface, RED_HOVER)
-        
-        self.details.draw(self.screen)
-        self.details.update(f"{player.name}       SCORE: {player.score}")
-        
-        if exit_flag:
-            self.screen_number = 5
-            pause.change_pause_state()
             
 victory_popup = VictorySurface(screen.display(),
                                screen.get_width(),
