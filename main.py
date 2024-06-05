@@ -1,14 +1,16 @@
 
 import pygame as pg
 
-from menus import main_screen, setting_screen, intro_screen, game_screen, game_popup, leaderboard_surface
+from menus import main_screen, setting_screen, intro_screen, game_screen, game_popup, leaderboard_surface, user_surface
 
 from objects.player import player
 from objects.bullet import player_bullet, PlayerBullet
 from objects.enemy import enemy_gp, enemy_box
+from objects.user import user_list
 
 from objects.tools.timer import enemies_move_timer
 from objects.tools.pause import pause
+from objects.tools.custom_timer import unlimited_gun_power_timer
 
 from sfx.sound_list import sounds
 
@@ -31,6 +33,8 @@ def main():
     
     while run:
         
+        user_list.update_user_preset()
+        
         match screen_number:
             
             # First screen
@@ -38,13 +42,11 @@ def main():
                 main_screen.main.draw()
                 screen_number = main_screen.main.update()
                 
-                
             # enter intro of game
             case 2:
                 intro_screen.game_intro.draw()
                 screen_number = intro_screen.game_intro.update()
     
-            
             # enter Settings
             case 3:
                 setting_screen.setting.draw()
@@ -63,16 +65,18 @@ def main():
             case 6:
                 if not pause.pause_state:
                     game_screen.game.draw()
-                else:
+                elif pause.pause_state and player.is_win == False:
                     game_popup.pause_popup.draw()
                     screen_number = game_popup.pause_popup.update()
                     
                 if player.is_win:
                     game_popup.victory_popup.draw()
                     screen_number = game_popup.victory_popup.update()
-                    
+            
+            # Add user button
             case 7:
-                pass
+                user_surface.user_setting.draw()
+                screen_number = user_surface.user_setting.update()
                 
         
         keys = pg.key.get_pressed()
@@ -96,7 +100,7 @@ def main():
             
                 if event.key == pg.K_SPACE and screen_number == 6 and not pause.pause_state:
                     
-                    if len(player_bullet) == 0: #TODO - Add special power (unlimited capacity for bullet) for later
+                    if len(player_bullet) == 0 or player.unlimited_gun: 
                         sounds.play_shoot_sound()
                         player_bullet.add(PlayerBullet())
                         
@@ -110,8 +114,14 @@ def main():
                 
                 enemy_box.update_group(enemy_gp)
                 enemy_box.box_movement()
+            
+            
+            elif player.unlimited_gun:
                 
-                
+                unlimited_gun_power_timer.update()
+                if not unlimited_gun_power_timer.active:
+                    player.unlimited_gun = False 
+            
             elif event.type == pg.QUIT:
                 run = False
                 

@@ -31,5 +31,7 @@ class CustomTimer:
                 self.deactivate()
 
 ENEMY_DEATH_DURATION = 300
+UNLIMITED_GUN_POWER_DURATION = 7000
 
 enemy_death_frame_timer = CustomTimer(ENEMY_DEATH_DURATION)
+unlimited_gun_power_timer = CustomTimer(UNLIMITED_GUN_POWER_DURATION)
