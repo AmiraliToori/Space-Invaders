@@ -4,8 +4,6 @@ import pygame as pg
 
 
 from objects.tools.custom_timer import enemy_death_frame_timer
-from objects.player import player
-
 
 from graphic.resolution_setting import screen
 
@@ -54,7 +52,7 @@ enemy_three = [create_image(frame, SCALE) for frame in frame_lst]
 ENEMY_MYSTERY_PATH = "material/Icons/enemy/mystery/mystery-frame1.png"
 ENEMY_MYSTERY_DEATH_PATH = "material/Icons/enemy/mystery/mystery-blow-effect.png"
 
-frame_lst = [ENEMY_MYSTERY_PATH, ENEMY_DEATH_PATH]
+frame_lst = [ENEMY_MYSTERY_PATH, ENEMY_MYSTERY_DEATH_PATH]
 
 mystery = [create_image(frame, SCALE) for frame in frame_lst]
 
@@ -187,8 +185,6 @@ class Enemy(pg.sprite.Sprite):
     
             
         
-        
-        
 class Mystery(pg.sprite.Sprite):
     
     def __init__(self) -> None:
@@ -203,13 +199,33 @@ class Mystery(pg.sprite.Sprite):
         
         self.rect = self.image.get_rect()
         self.rect.center = (self.x, self.y)
+        
+        self.able_to_move = True
+        self.is_dead = False
     
     
     def update(self) -> None:
-        self.rect.move_ip(-2 ,0)
+        if self.able_to_move:
+            self.rect.move_ip(-2 ,0)
         
         if self.rect.x + self.image.get_width() < 0:
             self.kill()
+    
+    def death(self):
+        if self.is_dead:
+            enemy_death_frame_timer.activate()
+            
+            self.able_to_move = False
+            
+            enemy_death_frame_timer.update()
+
+            if not enemy_death_frame_timer.active:
+                self.kill()
+        
+    def set_death_image(self):
+        sounds.play_invader_killed()
+        self.image = mystery[1]   
+    
     
         
 mystery_gp = pg.sprite.GroupSingle()
@@ -220,17 +236,17 @@ enemy_gp = pg.sprite.Group()
 for x in range(2, 35, 3):
     enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 9 // 48, enemy_three, 3))
     
-for x in range(2, 35, 3):
-    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 12 // 48, enemy_two, 2))
+# for x in range(2, 35, 3):
+#     enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 12 // 48, enemy_two, 2))
     
-for x in range(2, 35, 3):
-    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 15 // 48, enemy_two, 2))
+# for x in range(2, 35, 3):
+#     enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 15 // 48, enemy_two, 2))
     
-for x in range(2, 35, 3):
-    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 18 // 48, enemy_one, 1))
+# for x in range(2, 35, 3):
+#     enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 18 // 48, enemy_one, 1))
     
-for x in range(2, 35, 3):
-    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 21 // 48, enemy_one, 1))
+# for x in range(2, 35, 3):
+#     enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 21 // 48, enemy_one, 1))
         
 enemy_box = EnemyBox(enemy_gp)
             
