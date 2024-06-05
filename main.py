@@ -1,11 +1,12 @@
 
 import pygame as pg
 
-from menus import main_screen, setting_screen, intro_screen, game_screen, game_popup, leaderboard_surface
+from menus import main_screen, setting_screen, intro_screen, game_screen, game_popup, leaderboard_surface, user_surface
 
 from objects.player import player
 from objects.bullet import player_bullet, PlayerBullet
 from objects.enemy import enemy_gp, enemy_box
+from objects.user import user_list
 
 from objects.tools.timer import enemies_move_timer
 from objects.tools.pause import pause
@@ -32,6 +33,8 @@ def main():
     
     while run:
         
+        user_list.update_user_preset()
+        
         match screen_number:
             
             # First screen
@@ -39,13 +42,11 @@ def main():
                 main_screen.main.draw()
                 screen_number = main_screen.main.update()
                 
-                
             # enter intro of game
             case 2:
                 intro_screen.game_intro.draw()
                 screen_number = intro_screen.game_intro.update()
     
-            
             # enter Settings
             case 3:
                 setting_screen.setting.draw()
@@ -71,9 +72,11 @@ def main():
                 if player.is_win:
                     game_popup.victory_popup.draw()
                     screen_number = game_popup.victory_popup.update()
-                    
+            
+            # Add user button
             case 7:
-                pass
+                user_surface.user_setting.draw()
+                screen_number = user_surface.user_setting.update()
                 
         
         keys = pg.key.get_pressed()
