@@ -9,6 +9,7 @@ from objects.enemy import enemy_gp, enemy_box
 
 from objects.tools.timer import enemies_move_timer
 from objects.tools.pause import pause
+from objects.tools.custom_timer import unlimited_gun_power_timer
 
 from sfx.sound_list import sounds
 
@@ -63,7 +64,7 @@ def main():
             case 6:
                 if not pause.pause_state:
                     game_screen.game.draw()
-                else:
+                elif pause.pause_state and player.is_win == False:
                     game_popup.pause_popup.draw()
                     screen_number = game_popup.pause_popup.update()
                     
@@ -96,7 +97,7 @@ def main():
             
                 if event.key == pg.K_SPACE and screen_number == 6 and not pause.pause_state:
                     
-                    if len(player_bullet) == 0: #TODO - Add special power (unlimited capacity for bullet) for later
+                    if len(player_bullet) == 0 or player.unlimited_gun: 
                         sounds.play_shoot_sound()
                         player_bullet.add(PlayerBullet())
                         
@@ -110,8 +111,14 @@ def main():
                 
                 enemy_box.update_group(enemy_gp)
                 enemy_box.box_movement()
+            
+            
+            elif player.unlimited_gun:
                 
-                
+                unlimited_gun_power_timer.update()
+                if not unlimited_gun_power_timer.active:
+                    player.unlimited_gun = False 
+            
             elif event.type == pg.QUIT:
                 run = False
                 
