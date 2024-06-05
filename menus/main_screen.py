@@ -91,7 +91,7 @@ class MainScreen:
         if leaderboard_flag:
             self.screen_number = 4
         if exit_flag:
-            self.screen_number = 7
+            self.screen_number = 5
         
         
     def update(self) -> int:
