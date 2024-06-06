@@ -18,14 +18,6 @@ PLAYER_BULLET_IMG_PATH = "material/Icons/player/player-bullet-frame1.png"
 PLAYER_BULLET_IMG = create_image(PLAYER_BULLET_IMG_PATH, SCALE)
 
 
-###########################################################################################
-
-
-ENEMY_BULLET_IMG_PATH = "material/Icons/enemy/enemy-bullet.png"
-
-ENEMY_BULLET_IMG = create_image(ENEMY_BULLET_IMG_PATH, SCALE)
-
-
 class PlayerBullet(pg.sprite.Sprite):
     
     def __init__(self) -> None:
@@ -46,31 +38,5 @@ class PlayerBullet(pg.sprite.Sprite):
     
 player_bullet = pg.sprite.Group()
 
-
-
-
-class EnemyBullet(pg.sprite.Sprite):
-    
-    def __init__(self,
-                 x: int,
-                 y: int) -> None:
-        pg.sprite.Sprite.__init__(self)
-        
-        self.x = x
-        self.y = y
-        
-        self.image = ENEMY_BULLET_IMG
-        
-        self.rect = self.image.get_rect()
-        self.rect.center = (self.x, self.y)
-        
-    def update(self) -> None:
-        self.rect.move_ip(0, 1)
-        
-        if self.rect.y > 0:
-            self.kill()
-        
-        
-enemy_bullet = pg.sprite.Group()
 
     

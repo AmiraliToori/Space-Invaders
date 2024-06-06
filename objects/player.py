@@ -23,6 +23,9 @@ enemy_death_frames = [create_image(frame, SCALE) for frame in frame_lst]
 class Player(pg.sprite.Sprite):
     
     def __init__(self) -> None:
+        self.initialization()
+    
+    def initialization(self) -> None:
         
         pg.sprite.Sprite.__init__(self)
         
@@ -46,13 +49,14 @@ class Player(pg.sprite.Sprite):
         self.trigger = False
         self.is_win = False
         self.unlimited_gun = False
+        self.is_lost = False
         
     
     def update(self):
-        self.rect = (self.player_x, self.player_y)
+        self.rect = (self.player_x, self.player_y)#type: ignore
     
     def move_right(self) -> None:
-        if self.player_x < screen.get_width() - self.image.get_width():
+        if self.player_x < screen.get_width() - self.image.get_width():#type: ignore
             self.player_x += self.speed
         
     
@@ -66,6 +70,9 @@ class Player(pg.sprite.Sprite):
         
     def player_name_update(self) -> None:
         self.name = user_list.get_current_value()
+        
+    def reset(self) -> None:
+        self.initialization()
         
     
 player = Player()

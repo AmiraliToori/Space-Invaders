@@ -5,7 +5,12 @@ import pygame as pg
 from objects.tools.text import Text
 from objects.tools.button import Button
 
+from objects.player import player
+
 from graphic.resolution_setting import screen
+
+from extra.database import read_table
+
 
 FONT_PATH = "material/font/Pixelify_Sans/PixelifySans-VariableFont_wght.ttf"
 DEFAULT_FONT_COLOR = "white"
@@ -48,6 +53,14 @@ class LeaderBoard:
                                 width * 2 // 24,
                                 height * 2 // 24)
         
+        self.player_score_text = Text(f"{read_table(player.name)}",
+                                      FONT_PATH,
+                                      20,
+                                      DEFAULT_FONT_COLOR,
+                                      BACKGROUND_COLOR,
+                                      self.width // 2,
+                                      self.height // 2)
+        
     def draw(self) -> None:
         
         self.screen.blit(self.surface, (0, 0))
@@ -62,6 +75,8 @@ class LeaderBoard:
         
         if close_flag:
             self.screen_number = 1
+            
+        self.player_score_text.draw(self.surface)
             
     def update(self) -> int:
         temp = self.screen_number
