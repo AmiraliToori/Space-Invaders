@@ -5,7 +5,8 @@ import random
 from graphic.resolution_setting import screen
 
 from objects.player import player_group, player
-from objects.bullet import player_bullet, enemy_bullet, EnemyBullet
+from objects.player_bullet import player_bullet
+from objects.enemy_bullet import enemy_bullet, EnemyBullet
 from objects.enemy import enemy_gp, mystery_gp, Mystery
 from extra.database import insert_values
 
@@ -104,21 +105,20 @@ class GameScreen:
         self.lives_label.update(f"LIVES: {player.health}")
         ######################################################################################
         
-        for enemy in enemy_gp.sprites(): #FIXME - Bullets are not displaying on screen.
-            fire = random.choices([1,0], [0.1, 99.9])[0]
+        # for enemy in enemy_gp.sprites(): #FIXME - Bullets are not displaying on screen.
+        #     fire = random.choices([1,0], [0.1, 99.9])[0]
             
-            if fire == 1:
-                enemy_bullet.add(EnemyBullet(enemy.rect.x + enemy.image.get_width() // 2, enemy.rect.y + enemy.image.get_height() // 2))
+        #     if fire == 1:
+        #         enemy_bullet.add(EnemyBullet(enemy.rect.x + enemy.image.get_width() // 2, enemy.rect.y + enemy.image.get_height() // 2))
                 
         
-        enemy_bullet.update()
-        enemy_bullet.draw(self.screen)
+        # enemy_bullet.update()
+        # enemy_bullet.draw(self.screen)
         
         ###########################################################################################
         
         if len(enemy_gp.sprites()) == 0:
             player.is_win = True
-            self.save_state = True
             pause.change_pause_state()
             sounds.play_victory_sound()
             insert_values(player.name ,player.score)
@@ -128,6 +128,14 @@ class GameScreen:
         # if pg.sprite.groupcollide(player_group, enemy_gp, False, False):
         #     player.death()
         #     pause.change_pause_state() #FIXME - Fix the issue with the collide the player with the enemies which gives error
+        
+        for enemy in enemy_gp.sprites():
+            if enemy.rect.y >= player.player_y - player.image.get_height():
+                player.death()
+                player.is_lost = True
+                insert_values(player.name ,player.score)
+                pause.change_pause_state()
+                
         
         ###########################################################################################################
         
