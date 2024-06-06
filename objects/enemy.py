@@ -75,6 +75,7 @@ class EnemyBox:
         if [enemy for enemy in self.group.sprites() if enemy.rect.x + enemy.image.get_width() * 2 >= screen.get_width()]:
             self.move_to_left_toggle = True
             self.move_to_right_toggle = False
+            self.move_to_down = True
             self.move_down()
             
             
@@ -85,6 +86,7 @@ class EnemyBox:
         if [enemy for enemy in self.group.sprites() if enemy.rect.x - enemy.image.get_width() // 2 <= 0]:
             self.move_to_left_toggle = False
             self.move_to_right_toggle = True
+            self.move_to_down = True
             self.move_down()
             
             
@@ -121,7 +123,6 @@ class Enemy(pg.sprite.Sprite):
     def __init__(self,
                  x: int,
                  y: int,
-                 enemy_frame_lst: list,
                  enemy_type: int) -> None:
         pg.sprite.Sprite.__init__(self)
         
@@ -129,7 +130,14 @@ class Enemy(pg.sprite.Sprite):
         self.y = y
         self.enemy_type = enemy_type
         
-        self.frame_lst = enemy_frame_lst
+        if enemy_type == 1:
+            self.frame_lst = enemy_one
+        elif enemy_type == 2:
+            self.frame_lst = enemy_two
+        elif enemy_type == 3:
+            self.frame_lst = enemy_three
+            
+        
         self.image = self.frame_lst[0]
         
         self.rect = self.image.get_rect()
@@ -234,19 +242,19 @@ enemy_gp = pg.sprite.Group()
 
 
 for x in range(2, 35, 3):
-    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 9 // 48, enemy_three, 3))
+    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 9 // 48, 3))
     
-# for x in range(2, 35, 3):
-#     enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 12 // 48, enemy_two, 2))
+for x in range(2, 35, 3):
+    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 12 // 48, 2))
     
-# for x in range(2, 35, 3):
-#     enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 15 // 48, enemy_two, 2))
+for x in range(2, 35, 3):
+    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 15 // 48, 2))
     
-# for x in range(2, 35, 3):
-#     enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 18 // 48, enemy_one, 1))
+for x in range(2, 35, 3):
+    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 18 // 48, 1))
     
-# for x in range(2, 35, 3):
-#     enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 21 // 48, enemy_one, 1))
+for x in range(2, 35, 3):
+    enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 21 // 48, 1))
         
 enemy_box = EnemyBox(enemy_gp)
             
