@@ -1,20 +1,25 @@
 
 import pygame as pg
+import random
 
 from menus import main_screen, setting_screen, intro_screen, game_screen, game_popup, leaderboard_surface, user_surface
 
 from objects.player import player
-from objects.bullet import player_bullet, PlayerBullet
-from objects.enemy import enemy_gp, enemy_box
+from objects.player_bullet import player_bullet, PlayerBullet
+from objects.enemy import enemy_gp, enemy_box, Enemy
 from objects.user import user_list
 
-from objects.tools.timer import enemies_move_timer
+
+from objects.tools.timer import enemies_move_timer, enemies_spawn_timer
 from objects.tools.pause import pause
 from objects.tools.custom_timer import unlimited_gun_power_timer
 
 from sfx.sound_list import sounds
 
+from graphic.resolution_setting import screen
+
 from icecream import ic
+
 
 
 # MUSIC FILES PATH
@@ -22,6 +27,9 @@ MAIN_SCREEN_THEME_PATH = "material/sounds/musics/main_menu_theme.mp3"
 
 
 def main():
+    
+    
+    leaderboard_window = None
     
     pg.init()
     pg.mixer.init()
@@ -65,13 +73,17 @@ def main():
             case 6:
                 if not pause.pause_state:
                     game_screen.game.draw()
-                elif pause.pause_state and player.is_win == False:
+                elif pause.pause_state and player.is_win == False and player.is_lost == False:
                     game_popup.pause_popup.draw()
                     screen_number = game_popup.pause_popup.update()
                     
                 if player.is_win:
                     game_popup.victory_popup.draw()
                     screen_number = game_popup.victory_popup.update()
+                
+                elif player.is_lost:
+                    game_popup.gameover_popup.draw()
+                    screen_number = game_popup.gameover_popup.update()
             
             # Add user button
             case 7:
@@ -89,6 +101,25 @@ def main():
             
         if keys[pg.K_RIGHT]:
             player.move_right()
+        
+    
+        elif enemy_box.move_to_down == True and not pause.pause_state and screen_number == 6:
+                enemy_type_random = random.choices([1,2,3])[0]
+                
+                if enemies_move_timer.timing - 100 > 0:
+                    enemies_move_timer.change_timing_event(enemies_move_timer.timing - 100)
+                
+                
+                if enemy_box.move_to_left_toggle:
+                    for x in range(17, 50, 3):
+                        enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 9 // 48, enemy_type_random))
+                    enemy_box.move_to_down = False
+                    
+                    
+                else:
+                    for x in range(2, 35, 3):
+                        enemy_gp.add(Enemy(screen.get_width() * x // 50, screen.get_height() * 9 // 48, enemy_type_random))
+                    enemy_box.move_to_down = False
         
         
         
@@ -112,9 +143,10 @@ def main():
                 
                 enemy_gp.update()
                 
+                
                 enemy_box.update_group(enemy_gp)
                 enemy_box.box_movement()
-            
+                
             
             elif player.unlimited_gun:
                 
