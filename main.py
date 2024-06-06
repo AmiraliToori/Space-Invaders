@@ -10,7 +10,7 @@ from objects.enemy import enemy_gp, enemy_box, Enemy
 from objects.user import user_list
 
 
-from objects.tools.timer import enemies_move_timer, enemies_spawn_timer
+from objects.tools.timer import enemies_move_timer
 from objects.tools.pause import pause
 from objects.tools.custom_timer import unlimited_gun_power_timer
 
@@ -84,6 +84,9 @@ def main():
                 elif player.is_lost:
                     game_popup.gameover_popup.draw()
                     screen_number = game_popup.gameover_popup.update()
+                    
+                if screen_number == 1:
+                    game_screen.game.reset()
             
             # Add user button
             case 7:
@@ -102,11 +105,15 @@ def main():
         if keys[pg.K_RIGHT]:
             player.move_right()
         
-    
-        elif enemy_box.move_to_down == True and not pause.pause_state and screen_number == 6:
+        
+        elif enemy_box.move_to_down == True and not pause.pause_state and screen_number == 6 and len(enemy_gp.sprites()) != 0:
                 enemy_type_random = random.choices([1,2,3])[0]
                 
+                ic(enemies_move_timer.timer_id)
+                ic(enemies_move_timer.timing)
+                
                 if enemies_move_timer.timing - 100 > 0:
+                    ic(enemies_move_timer.timing)
                     enemies_move_timer.change_timing_event(enemies_move_timer.timing - 100)
                 
                 
