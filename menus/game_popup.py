@@ -34,7 +34,7 @@ class PauseSurface:
         self.height = height
         self.screen_number = 6
         
-        self.surface = pg.Surface((self.screen.get_width(), self.screen.get_height()), pg.SRCALPHA)
+        self.surface = pg.Surface((self.screen.get_width(), self.screen.get_height()))
         
         
         
@@ -66,7 +66,7 @@ class PauseSurface:
         exit_flag = self.exit_button.draw(self.surface, RED_HOVER)
         
         if exit_flag:
-            self.screen_number = 5
+            self.screen_number = 1
             pause.pause_state = False
     
     
@@ -91,9 +91,6 @@ class GameOverSurface(PauseSurface):
                  width: int,
                  height: int) -> None:
         super().__init__(screen, width, height)
-        
-        
-        # self.surface = pg.Surface((self.screen.get_width(), self.screen.get_height()))
         
         self.label = Text("GAME-OVER",
                                 FONT_PATH,
@@ -134,7 +131,7 @@ class GameOverSurface(PauseSurface):
         self.details.update(f"{player.name}       SCORE: {player.score}")
         
         if exit_flag:
-            self.screen_number = 5
+            self.screen_number = 1
             pause.pause_state = False
       
 gameover_popup = GameOverSurface(screen.display(),
