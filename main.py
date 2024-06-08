@@ -1,4 +1,5 @@
 
+
 import pygame as pg
 import random
 
@@ -14,22 +15,18 @@ from objects.tools.timer import enemies_move_timer
 from objects.tools.pause import pause
 from objects.tools.custom_timer import unlimited_gun_power_timer
 
+
 from sfx.sound_list import sounds
+from sfx.music_list import musics
 
 from graphic.resolution_setting import screen
 
 from icecream import ic
 
 
-
-# MUSIC FILES PATH
-MAIN_SCREEN_THEME_PATH = "material/sounds/musics/main_menu_theme.mp3"
-
+musics.play_main_title()
 
 def main():
-    
-    
-    leaderboard_window = None
     
     pg.init()
     pg.mixer.init()
@@ -37,10 +34,10 @@ def main():
     clock = pg.time.Clock()
     run = True
     screen_number = 1 # Start screen
-    # music_list.MusicList().play_main_title()
     
     while run:
         
+        user_list.update_list()
         user_list.update_user_preset()
         
         match screen_number:
@@ -76,10 +73,6 @@ def main():
                 elif pause.pause_state and player.is_win == False and player.is_lost == False:
                     game_popup.pause_popup.draw()
                     screen_number = game_popup.pause_popup.update()
-                    
-                if player.is_win:
-                    game_popup.victory_popup.draw()
-                    screen_number = game_popup.victory_popup.update()
                 
                 elif player.is_lost:
                     game_popup.gameover_popup.draw()
@@ -93,10 +86,13 @@ def main():
                 user_surface.user_setting.draw()
                 screen_number = user_surface.user_setting.update()
                 
+            case 8:
+                pass
+                
         
         keys = pg.key.get_pressed()
                    
-        if keys[pg.K_q]:
+        if keys[pg.K_q] and screen_number == 6:
             run = False
             
         if keys[pg.K_LEFT]:
@@ -109,10 +105,7 @@ def main():
         elif enemy_box.move_to_down == True and not pause.pause_state and screen_number == 6 and len(enemy_gp.sprites()) != 0:
                 enemy_type_random = random.choices([1,2,3])[0]
                 
-                ic(enemies_move_timer.timer_id)
-                ic(enemies_move_timer.timing)
-                
-                if enemies_move_timer.timing - 100 > 0:
+                if enemies_move_timer.timing - 100 > 0: 
                     ic(enemies_move_timer.timing)
                     enemies_move_timer.change_timing_event(enemies_move_timer.timing - 100)
                 
@@ -131,6 +124,10 @@ def main():
         
         
         event_list = pg.event.get()
+        
+        if screen_number == 7:
+            user_surface.user_setting.text_input.update(event_list) #type: ignore
+            
         
         for event in event_list:
         
