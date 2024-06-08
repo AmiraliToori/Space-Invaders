@@ -3,7 +3,7 @@
 import pygame as pg
 
 from objects.tools.text import Text
-from objects.tools.button import Button
+from objects.tools.button import Button, SettingButton
 
 from objects.player import player
 
@@ -53,13 +53,27 @@ class LeaderBoard:
                                 width * 2 // 24,
                                 height * 2 // 24)
         
-        self.player_score_text = Text(f"{read_table(player.name)}",
-                                      FONT_PATH,
-                                      20,
-                                      DEFAULT_FONT_COLOR,
-                                      BACKGROUND_COLOR,
-                                      self.width // 2,
-                                      self.height // 2)
+        self.next_btn = SettingButton(">",
+                             CLOSE_BUTTON_FONT_SIZE,
+                             DEFAULT_FONT_COLOR,
+                             width * 59 // 64,
+                             height // 2)
+        
+        self.previous_btn = SettingButton("<",
+                             CLOSE_BUTTON_FONT_SIZE,
+                             DEFAULT_FONT_COLOR,
+                             width * 5 // 64,
+                             height // 2)
+        
+        # self.player_score_text = Text(f"{read_table(player.name)}",
+        #                               FONT_PATH,
+        #                               20,
+        #                               DEFAULT_FONT_COLOR,
+        #                               BACKGROUND_COLOR,
+        #                               self.width // 2,
+        #                               self.height // 2)
+        
+        
         
     def draw(self) -> None:
         
@@ -75,8 +89,14 @@ class LeaderBoard:
         
         if close_flag:
             self.screen_number = 1
-            
-        self.player_score_text.draw(self.surface)
+        
+        self.next_btn.draw(self.surface, GREEN_HOVER, None)
+        
+        
+        self.previous_btn.draw(self.surface, GREEN_HOVER, None)
+        
+        
+        # self.player_score_text.draw(self.surface)
             
     def update(self) -> int:
         temp = self.screen_number
