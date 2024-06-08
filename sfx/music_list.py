@@ -2,7 +2,7 @@
 from .sfx import Music
 
 
-MAIN_TITLE_THEME = "material/sounds/musics/main_menu_theme.mp3"
+MAIN_TITLE_THEME = "material/sounds/musics/main_theme.mp3"
 
 class MusicList:
     
@@ -11,4 +11,5 @@ class MusicList:
         
     def play_main_title(self) -> None:
         self.main_title_theme.play_music()
-        
+
+musics = MusicList()
