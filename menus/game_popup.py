@@ -28,7 +28,12 @@ class PauseSurface:
                  screen,
                  width,
                  height) -> None:
-        
+        self.initialize(screen,
+                        width,
+                        height)
+    
+    
+    def initialize(self, screen, width, height) -> None:
         self.screen = screen
         self.width = width
         self.height = height
@@ -51,7 +56,9 @@ class PauseSurface:
                                 FONT_SIZE,
                                 DEFAULT_FONT_COLOR,
                                 width // 2,
-                                height * 14 // 24)
+                                height * 28 // 48)
+    
+    
         
     def draw(self) -> None:
         
@@ -74,6 +81,15 @@ class PauseSurface:
         temp = self.screen_number
         self.screen_number = 6
         return temp
+    
+    
+    def reset(self,
+              screen,
+              width,
+              height) -> None:
+        self.initialize(screen,
+                        width,
+                        height)
         
 
 pause_popup = PauseSurface(screen.display(),
@@ -83,14 +99,29 @@ pause_popup = PauseSurface(screen.display(),
 
 ####################################################################################################################
 
-class GameOverSurface(PauseSurface):
+class GameOverSurface:
     
     
     def __init__(self,
                  screen,
                  width: int,
                  height: int) -> None:
-        super().__init__(screen, width, height)
+        self.initialize(screen,
+                        width,
+                        height)
+        
+        
+    def initialize(self,
+                   screen,
+                   width,
+                   height) -> None:
+        
+        self.screen = screen
+        self.width = width
+        self.height = height
+        self.screen_number = 6
+        
+        self.surface = pg.Surface((self.screen.get_width(), self.screen.get_height()))
         
         self.label = Text("GAME-OVER",
                                 FONT_PATH,
@@ -114,8 +145,6 @@ class GameOverSurface(PauseSurface):
                                 DEFAULT_FONT_COLOR,
                                 width // 2,
                                 height * 31 // 48)
-        
-        
     
     def draw(self) -> None:
         
@@ -134,35 +163,24 @@ class GameOverSurface(PauseSurface):
             self.screen_number = 1
             pause.pause_state = False
       
+    def update(self) -> int:
+        temp = self.screen_number
+        self.screen_number = 6
+        return temp
+      
+      
+    def reset(self,
+              screen,
+              width,
+              height) -> None:
+        self.initialize(screen,
+                        width,
+                        height)
+    
+    
 gameover_popup = GameOverSurface(screen.display(),
                                  screen.get_width(),
                                  screen.get_height())
       
 ##########################################################################################################  
-      
-      
-class VictorySurface(GameOverSurface):
-    
-    
-    def __init__(self,
-                 screen,
-                 width: int,
-                 height: int) -> None:
-        super().__init__(screen, width, height)
-        
-        
-        self.surface = pg.Surface((self.screen.get_width(), self.screen.get_height()))
-        
-        self.label = Text("VICTORY",
-                                FONT_PATH,
-                                FONT_SIZE,
-                                DEFAULT_FONT_COLOR,
-                                BACKGROUND_COLOR,
-                                width // 2,
-                                height * 24 // 48
-                                )
-        
-            
-victory_popup = VictorySurface(screen.display(),
-                               screen.get_width(),
-                               screen.get_height())
+

@@ -16,8 +16,10 @@ from objects.tools.timer import enemies_move_timer
 from objects.tools.custom_timer import unlimited_gun_power_timer
 from objects.tools.pause import pause
 
+from menus.game_popup import gameover_popup
 
 from sfx.sound_list import sounds
+from sfx.music_list import musics
 
 from icecream import ic
 
@@ -43,13 +45,13 @@ class GameScreen:
                                 80,
                                 20)
         
-        self.lives_label = Text(f"LIVES: {player.health}",
-                                FONT_PATH,
-                                30,
-                                "#06ff06",
-                                "black",
-                                730,
-                                20)
+        # self.lives_label = Text(f"LIVES: {player.health}",
+        #                         FONT_PATH,
+        #                         30,
+        #                         "#06ff06",
+        #                         "black",
+        #                         730,
+        #                         20)
         
         self.initialize_game()
     
@@ -100,12 +102,18 @@ class GameScreen:
     
     def initialize_game(self) -> None:
         player.reset()
+        gameover_popup.reset(screen.display(),
+                             screen.get_width(),
+                             screen.get_height())
+        
+        
         enemy_gp.empty()
         enemy_bullet.empty()
         player_bullet.empty()
         mystery_gp.empty()
         enemy_box.move_to_down = False
         enemies_move_timer.set_to_default()
+        
         
         self.reset_enemy_gp()
     
@@ -131,8 +139,8 @@ class GameScreen:
         self.score_label.draw(self.screen)
         self.score_label.update(f"SCORE: {player.score}")
         
-        self.lives_label.draw(self.screen)
-        self.lives_label.update(f"LIVES: {player.health}")
+        # self.lives_label.draw(self.screen)
+        # self.lives_label.update(f"LIVES: {player.health}")
         ######################################################################################
         
         # for enemy in enemy_gp.sprites(): #FIXME - Bullets are not displaying on screen.
@@ -145,23 +153,24 @@ class GameScreen:
         # enemy_bullet.update()
         # enemy_bullet.draw(self.screen)
         
-        ###########################################################################################
+        #################################### VICTORY ####################################
         
-        if len(enemy_gp.sprites()) == 0 and len(player_group.sprites()) == 0:
-            player.is_win = True
-            pause.change_pause_state()
-            sounds.play_victory_sound()
-            insert_values(player.name ,player.score)
+        # if len(enemy_gp.sprites()) == 0:
+        #     player.is_win = True
+        #     pause.change_pause_state()
+        #     sounds.play_victory_sound()
+        #     insert_values(player.name ,player.score)
             
-            
-        #########################################################################################
+          
+        #################################### GAME OVER ###############################################
         
         # if pg.sprite.groupcollide(player_group, enemy_gp, False, False):
         #     player.death()
         #     pause.change_pause_state() #FIXME - Fix the issue with the collide the player with the enemies which gives error
         
         for enemy in enemy_gp.sprites():
-            if enemy.rect.y >= player.player_y - player.image.get_height(): #type: ignore
+            if enemy.rect.y >= player.player_y - player.image.get_height() and player.is_lost == False: #type: ignore
+                musics.stop_music()
                 player.death()
                 player.is_lost = True
                 insert_values(player.name ,player.score)

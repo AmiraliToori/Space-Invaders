@@ -3,6 +3,8 @@ import sys
 sys.path.append('/home/glados/Documents/AmirAli Toori/Lessons/Python/Space-Invaders')
 
 from extra.database import insert_user_account, delete_player, update_name, read_table, insert_values, read_player_table
+from objects.tools.temp import temp
+
 
 class UserList:
 
@@ -18,12 +20,12 @@ class UserList:
             self.list.append(user_name)
             insert_user_account(user_name)
         else:
-            pass #TODO - display a Error window, which shows that the entered name is duplicate and must be unique.
+            temp.change_value(-1)
               
               
     def delete_user(self,
                     user_name: str) -> None:
-        if user_name not in self.list:
+        if user_name in self.list:
             self.list.remove(user_name)
             delete_player(user_name)
         else:
@@ -33,14 +35,18 @@ class UserList:
     def change_user_name(self,
                          new_user_name: str) -> None:
         if new_user_name not in self.list:
-            self.user_account_dictionary[self.current_value] = new_user_name
             update_name(self.get_current_value(), new_user_name)
+            self.user_account_dictionary[self.current_value] = new_user_name
         else:
             pass #TODO - display a error window, which show that the player is already exist
     
     
     def update_user_preset(self) -> None:
         self.user_account_dictionary = {index : user_name for index ,user_name in enumerate(self.list, 1)}
+        
+    def update_list(self) -> None:
+        player_names = read_player_table()
+        self.list = [value[0] for value in player_names]
         
         
     def get_current_value(self) -> str:

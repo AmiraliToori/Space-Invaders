@@ -80,7 +80,8 @@ def read_player_table() -> list:
     with connect:
         c.execute('''SELECT * FROM Player''')
         
-    return  c.fetchall()
+    results = c.fetchall()
+    return results
 
 
 create_player_table()
@@ -101,8 +102,12 @@ create_score_table()
 # update_name("Abravesh", "Amirmahdi")
 # read_table("Amirmahdi")
 
-# delete_player("Amirmahdi")
+# delete_player("Mohammad")
 
-# read_table("Amirmahdi")
+# results = read_player_table()
+# print(type(results))
+
+# for value in results:
+#     print(value[0])
 
 

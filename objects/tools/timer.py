@@ -40,5 +40,3 @@ class Timer:
 enemies_move_timer = Timer(ENEMIES_MOVEMENT_ID, ENEMIES_MOVEMENT_TIMING)
 enemies_move_timer.set_timer_event(ENEMIES_MOVEMENT_TIMING)
 
-# enemies_spawn_timer = Timer(ENEMIES_SPAWN_ID, ENEMIES_SPAWN_TIMING)
-# enemies_spawn_timer.set_timer_event(ENEMIES_SPAWN_TIMING)
