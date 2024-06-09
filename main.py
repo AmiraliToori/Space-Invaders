@@ -3,7 +3,7 @@
 import pygame as pg
 import random
 
-from menus import main_screen, setting_screen, intro_screen, game_screen, game_popup, leaderboard_surface, user_surface
+from menus import main_screen, setting_screen, intro_screen, game_screen, game_popup, leaderboard_surface, user_surface, error_box, entry_box
 
 from objects.player import player
 from objects.player_bullet import player_bullet, PlayerBullet
@@ -14,6 +14,7 @@ from objects.user import user_list
 from objects.tools.timer import enemies_move_timer
 from objects.tools.pause import pause
 from objects.tools.custom_timer import unlimited_gun_power_timer
+from objects.tools.temp import temp, temp2
 
 
 from sfx.sound_list import sounds
@@ -81,14 +82,31 @@ def main():
                 if screen_number == 1:
                     game_screen.game.reset()
             
-            # Add user button
+            # user setting in setting
             case 7:
                 user_surface.user_setting.draw()
                 screen_number = user_surface.user_setting.update()
                 
-            case 8:
-                pass
+                if temp.value == -1:
+                    screen_number = 8
                 
+            # error box in user setting
+            case 8:
+                error_box.repeated_entry.draw()
+                screen_number = error_box.repeated_entry.update()
+            
+                if screen_number == 7:
+                    temp.value = 0
+            
+            # entry 1
+            case 9:
+                entry_box.entry_1.draw()
+                screen_number = entry_box.entry_1.update()
+            
+            # entry 2
+            case 10:
+                entry_box.entry_2.draw()
+                screen_number = entry_box.entry_2.update()
         
         keys = pg.key.get_pressed()
                    
@@ -105,9 +123,9 @@ def main():
         elif enemy_box.move_to_down == True and not pause.pause_state and screen_number == 6 and len(enemy_gp.sprites()) != 0:
                 enemy_type_random = random.choices([1,2,3])[0]
                 
-                if enemies_move_timer.timing - 100 > 0: 
+                if enemies_move_timer.timing - 100 > temp2.value: 
                     ic(enemies_move_timer.timing)
-                    enemies_move_timer.change_timing_event(enemies_move_timer.timing - 100)
+                    enemies_move_timer.change_timing_event(enemies_move_timer.timing - 25)
                 
                 
                 if enemy_box.move_to_left_toggle:
@@ -127,6 +145,12 @@ def main():
         
         if screen_number == 7:
             user_surface.user_setting.text_input.update(event_list) #type: ignore
+            
+        if screen_number == 9:
+            entry_box.entry_1.textinput.update(event_list) #type: ignore
+            
+        if screen_number == 10:
+            entry_box.entry_2.textinput.update(event_list) #type: ignore
             
         
         for event in event_list:
