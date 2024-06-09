@@ -24,8 +24,7 @@ from graphic.resolution_setting import screen
 
 from icecream import ic
 
-
-musics.play_main_title()
+COMBAT_THEME = "material/sounds/musics/combat_theme.mp3"
 
 def main():
     
@@ -36,10 +35,39 @@ def main():
     run = True
     screen_number = 1 # Start screen
     
+    load_music = True
+    
     while run:
         
         user_list.update_list()
         user_list.update_user_preset()
+        
+        if screen_number != 6 and not musics.get_busy():
+            musics.play_music()
+        # else:
+        #     musics.unload_music()
+        #     musics.load_music(COMBAT_THEME)
+            
+        if screen_number == 6 and load_music:
+            musics.load_music(COMBAT_THEME)
+            load_music = False
+        
+        if screen_number == 6 and not musics.get_busy() and player.is_lost == False:
+            musics.play_music()
+            
+        
+            
+        #     musics.load_music(COMBAT_THEME)
+        #     musics.play_music()
+        # if screen_number == 6:    
+            
+            
+            
+    
+                
+            
+            
+            
         
         match screen_number:
             
@@ -80,6 +108,8 @@ def main():
                     screen_number = game_popup.gameover_popup.update()
                     
                 if screen_number == 1:
+                    musics.reset_music()
+                    load_music = True
                     game_screen.game.reset()
             
             # user setting in setting
@@ -125,7 +155,7 @@ def main():
                 
                 if enemies_move_timer.timing - 100 > temp2.value: 
                     ic(enemies_move_timer.timing)
-                    enemies_move_timer.change_timing_event(enemies_move_timer.timing - 25)
+                    enemies_move_timer.change_timing_event(enemies_move_timer.timing - 100)
                 
                 
                 if enemy_box.move_to_left_toggle:
