@@ -19,6 +19,7 @@ from objects.tools.pause import pause
 from menus.game_popup import gameover_popup
 
 from sfx.sound_list import sounds
+from sfx.music_list import musics
 
 from icecream import ic
 
@@ -44,13 +45,13 @@ class GameScreen:
                                 80,
                                 20)
         
-        self.lives_label = Text(f"LIVES: {player.health}",
-                                FONT_PATH,
-                                30,
-                                "#06ff06",
-                                "black",
-                                730,
-                                20)
+        # self.lives_label = Text(f"LIVES: {player.health}",
+        #                         FONT_PATH,
+        #                         30,
+        #                         "#06ff06",
+        #                         "black",
+        #                         730,
+        #                         20)
         
         self.initialize_game()
     
@@ -138,8 +139,8 @@ class GameScreen:
         self.score_label.draw(self.screen)
         self.score_label.update(f"SCORE: {player.score}")
         
-        self.lives_label.draw(self.screen)
-        self.lives_label.update(f"LIVES: {player.health}")
+        # self.lives_label.draw(self.screen)
+        # self.lives_label.update(f"LIVES: {player.health}")
         ######################################################################################
         
         # for enemy in enemy_gp.sprites(): #FIXME - Bullets are not displaying on screen.
@@ -169,9 +170,9 @@ class GameScreen:
         
         for enemy in enemy_gp.sprites():
             if enemy.rect.y >= player.player_y - player.image.get_height() and player.is_lost == False: #type: ignore
+                musics.stop_music()
                 player.death()
                 player.is_lost = True
-                ic(player.name)
                 insert_values(player.name ,player.score)
                 pause.change_pause_state()
                 
