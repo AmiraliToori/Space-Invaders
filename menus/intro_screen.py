@@ -154,7 +154,7 @@ class IntroScreen:
         
         
         if play_button:
-            self.screen_number = 6
+            self.screen_number = 9
         if back_button:
             self.screen_number = 1
     
