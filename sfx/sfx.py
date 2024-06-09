@@ -44,9 +44,10 @@ class Music:
                    fade_out: int = 0) -> None:
         
         pg.mixer.music.play(loops, max_time, fade_out)
-        
-    def get_busy(self) -> None:
-        pg.mixer.music.get_busy()
+    
+    
+    def get_busy(self) -> bool:
+        return pg.mixer.music.get_busy()
         
     def stop_music(self) -> None:
         pg.mixer.music.stop()
