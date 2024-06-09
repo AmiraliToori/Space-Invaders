@@ -3,6 +3,8 @@ import sys
 sys.path.append('/home/glados/Documents/AmirAli Toori/Lessons/Python/Space-Invaders')
 
 from extra.database import insert_user_account, delete_player, update_name, read_table, insert_values, read_player_table
+from objects.tools.temp import temp
+
 
 class UserList:
 
@@ -18,7 +20,7 @@ class UserList:
             self.list.append(user_name)
             insert_user_account(user_name)
         else:
-            pass #TODO - display a Error window, which shows that the entered name is duplicate and must be unique.
+            temp.change_value(-1)
               
               
     def delete_user(self,
