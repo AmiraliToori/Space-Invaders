@@ -65,14 +65,6 @@ class LeaderBoard:
                              width * 5 // 64,
                              height // 2)
         
-        # self.player_score_text = Text(f"{read_table(player.name)}",
-        #                               FONT_PATH,
-        #                               20,
-        #                               DEFAULT_FONT_COLOR,
-        #                               BACKGROUND_COLOR,
-        #                               self.width // 2,
-        #                               self.height // 2)
-        
         
         
     def draw(self) -> None:
@@ -96,7 +88,6 @@ class LeaderBoard:
         self.previous_btn.draw(self.surface, GREEN_HOVER, None)
         
         
-        # self.player_score_text.draw(self.surface)
             
     def update(self) -> int:
         temp = self.screen_number
