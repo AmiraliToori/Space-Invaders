@@ -2,14 +2,10 @@
 
 import pygame as pg
 
-
 from .player import player
-
-from graphic.resolution_setting import screen
 
 from .tools.image_func import create_image
 
-from icecream import ic
 
 SCALE = 0.03
 
@@ -24,16 +20,16 @@ class PlayerBullet(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self)
         
         
-        self.x, self.y = (player.player_x + player.image.get_width() // 2), (player.player_y + player.image.get_height() // 2)
+        self.x, self.y = (player.player_x + player.image.get_width() // 2), (player.player_y + player.image.get_height() // 2) # type: ignore
         
         self.image = PLAYER_BULLET_IMG
         self.rect = self.image.get_rect()
         self.rect.center = (self.x, self.y)
     
     def update(self):
-        self.rect.move_ip(0, -4)
+        self.rect.move_ip(0, -4) 
         
-        if self.rect.y < 0:
+        if self.rect.y < 0: 
             self.kill()
     
 player_bullet = pg.sprite.Group()
