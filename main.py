@@ -44,9 +44,6 @@ def main():
         
         if screen_number != 6 and not musics.get_busy():
             musics.play_music()
-        # else:
-        #     musics.unload_music()
-        #     musics.load_music(COMBAT_THEME)
             
         if screen_number == 6 and load_music:
             musics.load_music(COMBAT_THEME)
@@ -54,20 +51,6 @@ def main():
         
         if screen_number == 6 and not musics.get_busy() and player.is_lost == False:
             musics.play_music()
-            
-        
-            
-        #     musics.load_music(COMBAT_THEME)
-        #     musics.play_music()
-        # if screen_number == 6:    
-            
-            
-            
-    
-                
-            
-            
-            
         
         match screen_number:
             
@@ -89,7 +72,8 @@ def main():
             # enter leaderboard
             case 4:
                 leaderboard_surface.leaderboard_screen.draw()
-                screen_number = leaderboard_surface.leaderboard_screen.update()
+                screen_number = leaderboard_surface.leaderboard_screen.update_btn()
+                leaderboard_surface.leaderboard_screen.update()
                 
             # exit button
             case 5:

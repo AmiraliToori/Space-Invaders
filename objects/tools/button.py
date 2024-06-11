@@ -1,9 +1,7 @@
 
-
 import pygame as pg
+
 from sfx import sound_list
-
-
 
 MAIN_FONT_PATH = "material/font/Pixelify_Sans/PixelifySans-VariableFont_wght.ttf"
 ANTI_ALIAS = True

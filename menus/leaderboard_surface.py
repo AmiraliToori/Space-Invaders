@@ -5,11 +5,9 @@ import pygame as pg
 from objects.tools.text import Text
 from objects.tools.button import Button, SettingButton
 
-from objects.player import player
-
 from graphic.resolution_setting import screen
 
-from extra.database import read_table
+from extra.database import read_score_table
 
 
 FONT_PATH = "material/font/Pixelify_Sans/PixelifySans-VariableFont_wght.ttf"
@@ -36,6 +34,8 @@ class LeaderBoard:
         self.height = height
         
         self.screen_number = 4
+        
+        self.my_font = pg.sysfont.SysFont(FONT_PATH, 25)
         
         self.surface = pg.Surface((self.screen.get_width(), self.screen.get_height()))
         
@@ -65,6 +65,8 @@ class LeaderBoard:
                              width * 5 // 64,
                              height // 2)
         
+        self.scores_lst = read_score_table()
+        
         
         
     def draw(self) -> None:
@@ -82,14 +84,30 @@ class LeaderBoard:
         if close_flag:
             self.screen_number = 1
         
-        self.next_btn.draw(self.surface, GREEN_HOVER, None)
+        # self.next_btn.draw(self.surface, GREEN_HOVER, None)
+        
+        # self.previous_btn.draw(self.surface, GREEN_HOVER, None)
         
         
-        self.previous_btn.draw(self.surface, GREEN_HOVER, None)
+    def update(self) -> None:
+        x_pos = 15
+        y_pos = 10
         
+        self.scores_lst = read_score_table()
         
-            
-    def update(self) -> int:
+        for tuple in self.scores_lst:
+            text = self.my_font.render(f"{tuple[0]} : {tuple[1]}",
+                                True,
+                                DEFAULT_FONT_COLOR,
+                                BACKGROUND_COLOR)
+            self.surface.blit(text, (self.width * y_pos // 100, self.height * x_pos // 100))
+            x_pos += 4
+            if x_pos >= 90:
+                x_pos = 15
+                y_pos += 25
+                            
+    
+    def update_btn(self) -> int:
         temp = self.screen_number
         self.screen_number = 4
         return temp

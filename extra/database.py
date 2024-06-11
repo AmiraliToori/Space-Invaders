@@ -65,14 +65,12 @@ def delete_player(player_name: str) -> None:
 
 ####################################################################################
 
-def read_table(player_name: str) -> list:
+def read_score_table() -> list:
     
     with connect:
         c.execute('''SELECT * FROM Score 
-                  WHERE Score.player_name = :player_name
                   ORDER BY Score.score DESC
-                  ''',
-                  {"player_name": player_name})
+                  ''')
         
         return c.fetchall()
     
@@ -86,7 +84,6 @@ def read_player_table() -> list:
 
 create_player_table()
 create_score_table()
-
 
 # insert_user_account("Mohammad")
 # insert_user_account("Abravesh")

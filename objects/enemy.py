@@ -1,8 +1,6 @@
 
 import pygame as pg
 
-
-
 from objects.tools.custom_timer import enemy_death_frame_timer
 
 from graphic.resolution_setting import screen
@@ -70,8 +68,7 @@ class EnemyBox:
         self.move_to_left_toggle = False
         self.move_to_down = False
         
-    def box_movement(self): #FIXME - Fix the issue with enemy box movement from down to left, which is not direct move to down
-        
+    def box_movement(self): 
         if [enemy for enemy in self.group.sprites() if enemy.rect.x + enemy.image.get_width() * 2 >= screen.get_width()]:
             self.move_to_left_toggle = True
             self.move_to_right_toggle = False
