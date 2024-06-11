@@ -1,11 +1,8 @@
 
 import pygame as pg
 
-from graphic.resolution_setting import screen
-
 from .tools.image_func import create_image
 
-from icecream import ic
 
 SCALE = 0.03
 
@@ -29,9 +26,9 @@ class EnemyBullet(pg.sprite.Sprite):
         self.rect.center = (self.x, self.y)
         
     def update(self) -> None:
-        self.rect.move_ip(0, 1)
+        self.rect.move_ip(0, 1) 
         
-        if self.rect.y > 0:
+        if self.rect.y > 0: 
             self.kill()
         
         
