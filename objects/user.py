@@ -2,7 +2,7 @@ import sys
 
 sys.path.append('/home/glados/Documents/AmirAli Toori/Lessons/Python/Space-Invaders')
 
-from extra.database import insert_user_account, delete_player, update_name, read_table, insert_values, read_player_table
+from extra.database import insert_user_account, delete_player, update_name, read_score_table, insert_values, read_player_table
 from objects.tools.temp import temp
 
 
@@ -64,7 +64,7 @@ class UserList:
     def show_current_user_leaderboard(self,
                                       user_name: str) -> None:
         if user_name in self.list:
-            read_table(user_name)
+            read_score_table()
         else:
             pass #TODO - display a error message which indicates that the player is not exist.
         
