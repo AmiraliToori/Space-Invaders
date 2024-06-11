@@ -53,11 +53,11 @@ class Player(pg.sprite.Sprite):
         
     
     def update(self):
-        self.rect = (self.player_x, self.player_y) #type: ignore
+        self.rect = (self.player_x, self.player_y) 
         self.name = user_list.get_current_value()
     
     def move_right(self) -> None:
-        if self.player_x < screen.get_width() - self.image.get_width():#type: ignore
+        if self.player_x < screen.get_width() - self.image.get_width():
             self.player_x += self.speed
         
     
